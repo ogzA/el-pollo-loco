@@ -23,6 +23,15 @@ export class World {
 			this.character.width,
 			this.character.height,
 		);
+		this.enemies.forEach((enemy) => {
+			this.ctx.drawImage(
+				enemy.img,
+				enemy.x,
+				enemy.y,
+				enemy.width,
+				enemy.height,
+			);
+		});
 
 		// Draw() wird immer wieder aufgerufen
 		requestAnimationFrame(() => this.draw());
