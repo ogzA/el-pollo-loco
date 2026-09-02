@@ -1,21 +1,28 @@
 import { Character } from "../models/character.class.js";
 import { Chicken } from "../models/chicken.class.js";
+import { Keyboard } from "../models/keyboard.class.js";
+import { World } from "../models/world.class.js";
 
 let canvas;
-let ctx;
-const character = new Character();
-const enemies = [new Chicken(), new Chicken(), new Chicken()];
+let world;
 
 function init() {
 	canvas = document.getElementById("canvas");
-	ctx = canvas.getContext("2d");
+	world = new World(canvas);
 
-	console.log("My Character is", character);
+	console.log("My Character is", world.character);
 }
 
-window.addEventListener("load", init);
+// keyCode ist deprecated. key property nutzen: https://www.w3schools.com/Jsref/event_key_key.asp
+/* document.addEventListener("keydown", (e) => {
+	if (e.code === "ArrowRight") {
+		Keyboard.RIGHT = true;
+		console.log(Keyboard.RIGHT);
+	}
+}); */
 
+/* window.keyboard = keyboard; */
 // to test in browser
 /* window.character = character; */
 
-window.enemies = enemies;
+window.addEventListener("load", init);
