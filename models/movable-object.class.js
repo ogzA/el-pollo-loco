@@ -1,5 +1,5 @@
 export class MovableObject {
-	x = 75;
+	x = 120;
 	y = 250;
 	img;
 	height = 150;
