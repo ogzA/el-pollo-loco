@@ -4,15 +4,18 @@ import { Chicken } from "./chicken.class.js";
 export class World {
 	character = new Character();
 	enemies = [new Chicken(), new Chicken(), new Chicken()];
-
+	canvas;
 	ctx;
 
-	constructor(canvas) {
-		this.ctx = canvas.getContext("2d");
+	constructor(_canvas) {
+		this.ctx = _canvas.getContext("2d");
+		this.canvas = _canvas;
 		this.draw();
 	}
 
 	draw() {
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
 		this.ctx.drawImage(
 			this.character.img,
 			this.character.x,
@@ -20,5 +23,8 @@ export class World {
 			this.character.width,
 			this.character.height,
 		);
+
+		// Draw() wird immer wieder aufgerufen
+		requestAnimationFrame(() => this.draw());
 	}
 }
