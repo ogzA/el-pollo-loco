@@ -1,6 +1,6 @@
 export class ImageHub {
 	static PEPE = {
-		move: [],
+		move: ["../assets/img/2_character_pepe/2_walk/W-21.png"],
 		idle: ["0", "1"],
 		long_idle: [],
 		jump: [],
@@ -16,7 +16,7 @@ export class ImageHub {
 	};
 
 	static CHICKEN = {
-		move: [],
+		move: ["../assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"],
 		dead: [],
 	};
 

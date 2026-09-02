@@ -1,9 +1,9 @@
+import { ImageHub } from "./image-hub.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
 export class Character extends MovableObject {
 	constructor() {
-		super();
-		console.log("Hello from character");
+		super().loadImage(ImageHub.PEPE.move[0]);
 	}
 
 	moveRight() {
