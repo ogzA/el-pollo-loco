@@ -8,6 +8,6 @@ export class Cloud extends MovableObject {
 	constructor() {
 		super().loadImage(ImageHub.CLOUD.move[0]);
 
-		this.x = 300 + Math.random() * 500;
+		this.x = Math.random() * 500;
 	}
 }

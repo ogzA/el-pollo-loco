@@ -4,6 +4,10 @@ import { MovableObject } from "./movable-object.class.js";
 export class Character extends MovableObject {
 	constructor() {
 		super().loadImage(ImageHub.PEPE.move[0]);
+
+		this.height = 350;
+		this.width = 150;
+		this.y = 90;
 	}
 
 	moveRight() {
