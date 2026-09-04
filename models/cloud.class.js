@@ -9,5 +9,11 @@ export class Cloud extends MovableObject {
 		super().loadImage(ImageHub.CLOUD.move[0]);
 
 		this.x = Math.random() * 500;
+
+		this.animate();
+	}
+
+	animate() {
+		this.moveLeft();
 	}
 }
