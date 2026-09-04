@@ -13,11 +13,22 @@ export class MovableObject {
 		this.img.src = path;
 	}
 
+	// Verständnisfrage hier zu "this.imageCache[path] = img": Ticket via Loom erstellen
+	loadImages(arr) {
+		arr.forEach((path) => {
+			const img = new Image();
+			img.src = path;
+			this.imageCache[path] = img;
+		});
+	}
+
 	moveRight() {
 		console.log("is moving to right ...");
 	}
 
 	moveLeft() {
-		console.log("is moving to left");
+		setInterval(() => {
+			this.x -= this.speed;
+		}, 1000 / 60);
 	}
 }
