@@ -1,7 +1,7 @@
 export class Keyboard {
-	static LEFT = false;
-	static RIGHT = false;
-	static UP = false;
-	static DOWN = false;
-	static SPACE = false;
+	LEFT = false;
+	RIGHT = false;
+	UP = false;
+	DOWN = false;
+	SPACE = false;
 }
