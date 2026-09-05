@@ -24,11 +24,18 @@ export class World {
 	];
 	canvas;
 	ctx;
+	keyboard;
 
-	constructor(_canvas) {
+	constructor(_canvas, _keyboard) {
 		this.ctx = _canvas.getContext("2d");
 		this.canvas = _canvas;
+		this.keyboard = _keyboard;
 		this.draw();
+		this.setWorld();
+	}
+
+	setWorld() {
+		this.character.world = this;
 	}
 
 	// Reihenfolge ist hier wichtig! Hinweis: Überlappung der Elemente
