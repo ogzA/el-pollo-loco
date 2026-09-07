@@ -2,9 +2,10 @@ import { BackgroundObject } from "../models/background-object.class.js";
 import { Cloud } from "../models/cloud.class.js";
 import { Chicken } from "../models/chicken.class.js";
 import { Level } from "../models/level.class.js";
+import { FinalBoss } from "../models/final-boss.class.js";
 
 export const level1 = new Level(
-	[new Chicken(), new Chicken(), new Chicken()],
+	[new Chicken(), new Chicken(), new Chicken(), new FinalBoss()],
 	[new Cloud()],
 	[
 		new BackgroundObject("./assets/img/5_background/layers/air.png", -1024),
