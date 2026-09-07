@@ -3,8 +3,6 @@ import { Chicken } from "../models/chicken.class.js";
 import { Keyboard } from "../models/keyboard.class.js";
 import { World } from "../models/world.class.js";
 
-export const CANVAS_HEIGHT = 480;
-
 let canvas;
 let world;
 const keyboard = new Keyboard();
