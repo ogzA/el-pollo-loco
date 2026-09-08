@@ -4,6 +4,7 @@ import { MovableObject } from "./movable-object.class.js";
 export class Chicken extends MovableObject {
 	IMAGES_WALKING = [];
 	IMAGES_WALKING = ImageHub.CHICKEN.move;
+	showFrame = true;
 
 	constructor() {
 		super();
@@ -19,15 +20,12 @@ export class Chicken extends MovableObject {
 	}
 
 	animate() {
-		this.moveLeft();
+		setInterval(() => {
+			this.moveLeft();
+		}, 1000 / 60);
 
 		setInterval(() => {
-			const i = this.currentImage % this.IMAGES_WALKING.length;
-			let path = this.IMAGES_WALKING[i];
-			this.img = this.imageCache[path];
-			this.currentImage++;
+			this.walkAnimation(this.IMAGES_WALKING);
 		}, 200);
 	}
 }
-
-// http://127.0.0.1:5500/assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png,../assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png,../assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png

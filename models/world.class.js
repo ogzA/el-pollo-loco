@@ -15,10 +15,21 @@ export class World {
 		this.keyboard = _keyboard;
 		this.draw();
 		this.setWorld();
+		this.checkCollisions();
 	}
 
 	setWorld() {
 		this.character.world = this;
+	}
+
+	checkCollisions() {
+		setInterval(() => {
+			this.level.enemies.forEach((enemy) => {
+				if (this.character.isColliding(enemy)) {
+					console.log(enemy, "wird kollidiert");
+				}
+			});
+		}, 100);
 	}
 
 	// Reihenfolge ist hier wichtig! Hinweis: Überlappung der Elemente
@@ -50,7 +61,8 @@ export class World {
 			this.flipImage(mo);
 		}
 
-		this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+		mo.draw(this.ctx);
+		mo.drawFrame(this.ctx);
 
 		if (mo.otherDirection) {
 			this.flipImageBack(mo);

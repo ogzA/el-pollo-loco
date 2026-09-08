@@ -10,6 +10,8 @@ export class MovableObject {
 	otherDirection = false;
 	speedY = 0;
 	acceleration = 2.5;
+	showFrame = false;
+
 	applyGravity() {
 		setInterval(() => {
 			if (this.isAboveGround() || this.speedY > 0) {
@@ -28,7 +30,30 @@ export class MovableObject {
 		this.img.src = path;
 	}
 
-	// Verständnisfrage hier zu "this.imageCache[path] = img": Ticket via Loom erstellen
+	draw(ctx) {
+		ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+	}
+
+	// blauer Rahmen
+	drawFrame(ctx) {
+		if (this.showFrame) {
+			ctx.beginPath();
+			ctx.lineWidth = 5;
+			ctx.strokeStyle = "blue";
+			ctx.rect(this.x, this.y, this.width, this.height);
+			ctx.stroke();
+		}
+	}
+
+	isColliding(mo) {
+		return (
+			this.x + this.width > mo.x &&
+			this.y + this.height > mo.y &&
+			this.x < mo.x + mo.width &&
+			this.y < mo.y + mo.height
+		);
+	}
+
 	loadImages(arr) {
 		arr.forEach((path) => {
 			const img = new Image();

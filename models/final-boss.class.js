@@ -6,6 +6,7 @@ export class FinalBoss extends MovableObject {
 	height = 500;
 	width = 400;
 	y = -40;
+	showFrame = true;
 
 	constructor() {
 		super();
