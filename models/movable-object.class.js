@@ -11,6 +11,8 @@ export class MovableObject {
 	speedY = 0;
 	acceleration = 2.5;
 	showFrame = false;
+	energy = 100;
+	lastHit = 0;
 
 	applyGravity() {
 		setInterval(() => {
@@ -54,10 +56,30 @@ export class MovableObject {
 		);
 	}
 
+	hit() {
+		this.energy -= 2;
+		if (this.energy < 0) {
+			this.energy = 0;
+		} else {
+			this.lastHit = new Date().getTime();
+		}
+	}
+
+	isHurt() {
+		let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
+		timepassed = timepassed / 1000;
+		return timepassed < 0.5;
+	}
+
+	isDead() {
+		return this.energy == 0;
+	}
+
 	loadImages(arr) {
 		arr.forEach((path) => {
 			const img = new Image();
 			img.src = path;
+			img.style = "transform: scaleX(-1)";
 			this.imageCache[path] = img;
 		});
 	}

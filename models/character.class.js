@@ -3,14 +3,14 @@ import { ImageHub } from "./image-hub.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
 export class Character extends MovableObject {
-	IMAGES_WALKING = [];
 	IMAGES_WALKING = ImageHub.PEPE.move;
-
 	IMAGES_JUMPING = ImageHub.PEPE.jump;
+	IMAGES_DEAD = ImageHub.PEPE.dead;
+	IMAGES_HURT = ImageHub.PEPE.hurt;
 
 	world;
 	y = -100;
-	speed = 15;
+	speed = 10;
 	height = 350;
 	width = 150;
 	showFrame = true;
@@ -21,6 +21,8 @@ export class Character extends MovableObject {
 
 		this.loadImages(this.IMAGES_WALKING);
 		this.loadImages(this.IMAGES_JUMPING);
+		this.loadImages(this.IMAGES_HURT);
+		this.loadImages(this.IMAGES_DEAD);
 
 		this.applyGravity();
 
@@ -50,7 +52,11 @@ export class Character extends MovableObject {
 		}, 1000 / 30);
 
 		setInterval(() => {
-			if (this.isAboveGround()) {
+			if (this.isDead()) {
+				this.walkAnimation(this.IMAGES_DEAD);
+			} else if (this.isHurt()) {
+				this.walkAnimation(this.IMAGES_HURT);
+			} else if (this.isAboveGround()) {
 				this.walkAnimation(this.IMAGES_JUMPING);
 			} else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
 				this.walkAnimation(this.IMAGES_WALKING);
