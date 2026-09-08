@@ -19,7 +19,6 @@ function init() {
 document.addEventListener("keydown", (e) => {
 	if (e.key === "ArrowRight") {
 		keyboard.RIGHT = true;
-		console.log(keyboard.RIGHT);
 	}
 
 	if (e.key === "ArrowDown") {
