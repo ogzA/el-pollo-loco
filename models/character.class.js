@@ -53,13 +53,13 @@ export class Character extends MovableObject {
 
 		setInterval(() => {
 			if (this.isDead()) {
-				this.walkAnimation(this.IMAGES_DEAD);
+				this.playAnimation(this.IMAGES_DEAD);
 			} else if (this.isHurt()) {
-				this.walkAnimation(this.IMAGES_HURT);
+				this.playAnimation(this.IMAGES_HURT);
 			} else if (this.isAboveGround()) {
-				this.walkAnimation(this.IMAGES_JUMPING);
+				this.playAnimation(this.IMAGES_JUMPING);
 			} else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-				this.walkAnimation(this.IMAGES_WALKING);
+				this.playAnimation(this.IMAGES_WALKING);
 			}
 		}, 50);
 	}

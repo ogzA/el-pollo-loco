@@ -21,7 +21,7 @@ export class FinalBoss extends MovableObject {
 	animate() {
 		this.moveLeft();
 		setInterval(() => {
-			this.walkAnimation(this.IMAGES_WALKING);
+			this.playAnimation(this.IMAGES_WALKING);
 		}, 200);
 	}
 }

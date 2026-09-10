@@ -50,7 +50,7 @@ export class MovableObject extends DrawableObject {
 		return this.energy == 0;
 	}
 
-	walkAnimation(images) {
+	playAnimation(images) {
 		const i = this.currentImage % images.length;
 		const path = images[i];
 		this.img = this.imageCache[path];
