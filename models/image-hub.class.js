@@ -27,13 +27,13 @@ export class ImageHub {
 			"./assets/img/2_character_pepe/4_hurt/H-43.png",
 		],
 		dead: [
-			"assets/img/2_character_pepe/5_dead/D-51.png",
-			"assets/img/2_character_pepe/5_dead/D-52.png",
-			"assets/img/2_character_pepe/5_dead/D-53.png",
-			"assets/img/2_character_pepe/5_dead/D-54.png",
-			"assets/img/2_character_pepe/5_dead/D-55.png",
-			"assets/img/2_character_pepe/5_dead/D-56.png",
-			"assets/img/2_character_pepe/5_dead/D-57.png",
+			"./assets/img/2_character_pepe/5_dead/D-51.png",
+			"./assets/img/2_character_pepe/5_dead/D-52.png",
+			"./assets/img/2_character_pepe/5_dead/D-53.png",
+			"./assets/img/2_character_pepe/5_dead/D-54.png",
+			"./assets/img/2_character_pepe/5_dead/D-55.png",
+			"./assets/img/2_character_pepe/5_dead/D-56.png",
+			"./assets/img/2_character_pepe/5_dead/D-57.png",
 		],
 	};
 
@@ -81,16 +81,37 @@ export class ImageHub {
 		sky: [],
 	};
 
-	static BARS = {
-		health: [],
-		coins: [],
-		bottles: [],
+	static STATUS_BAR = {
+		health: [
+			"./assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png",
+			"./assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png",
+			"./assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png",
+			"./assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/60.png",
+			"./assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png",
+			"./assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png",
+		],
+		coins: [
+			"./assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png",
+			"./assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png",
+			"./assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/40.png",
+			"./assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/60.png",
+			"./assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/80.png",
+			"./assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png",
+		],
+		bottles: [
+			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
+			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
+			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
+			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
+			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
+			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
+		],
 	};
 
 	static BOTTLES = {
 		left: [],
-		right: [],
-		straight: [],
+		right: ["./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png"],
+		straight: ["./assets/img/6_salsa_bottle/salsa_bottle.png"],
 		flying: [],
 		splash: [],
 	};

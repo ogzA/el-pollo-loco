@@ -8,6 +8,9 @@ export class World {
 	ctx;
 	keyboard;
 	camera_x = 0;
+	statusBar = new StatusBar();
+	coinBar = new CoinBar();
+	bottleBar = new BottleBar();
 
 	constructor(_canvas, _keyboard) {
 		this.ctx = _canvas.getContext("2d");
@@ -24,13 +27,14 @@ export class World {
 
 	checkCollisions() {
 		setInterval(() => {
-			this.level.enemies.forEach((enemy) => {
-				if (this.character.isColliding(enemy)) {
-					this.character.hit();
-					console.log(this.character.energy);
-				}
-			});
-		}, 100);
+	checkCollisions() {
+		this.level.enemies.forEach((enemy) => {
+			if (this.character.isColliding(enemy)) {
+				this.character.hit();
+				console.log(this.character.energy);
+				this.statusBar.setPercentage(this.character.energy);
+			}
+		});
 	}
 
 	// Reihenfolge ist hier wichtig! Hinweis: Überlappung der Elemente
@@ -41,6 +45,14 @@ export class World {
 
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
+
+		this.ctx.translate(-this.camera_x, 0); // Back
+		// -------------- Space for fixed objects ------------
+		this.addToMap(this.statusBar);
+		this.addToMap(this.coinBar);
+		this.addToMap(this.bottleBar);
+		this.ctx.translate(this.camera_x, 0); // Forwards
+
 		this.addObjectsToMap(this.level.enemies);
 		this.addToMap(this.character);
 
