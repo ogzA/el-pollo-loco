@@ -112,7 +112,12 @@ export class ImageHub {
 		left: [],
 		right: ["./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png"],
 		straight: ["./assets/img/6_salsa_bottle/salsa_bottle.png"],
-		flying: [],
+		flying: [
+			"./assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
+		],
 		splash: [],
 	};
 

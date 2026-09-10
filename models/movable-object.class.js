@@ -7,6 +7,7 @@ export class MovableObject extends DrawableObject {
 	acceleration = 2.5;
 	showFrame = false;
 	energy = 100;
+	bottles = 0;
 	lastHit = 0;
 
 	applyGravity() {
@@ -19,7 +20,12 @@ export class MovableObject extends DrawableObject {
 	}
 
 	isAboveGround() {
-		return this.y < 90;
+		if (this.alwaysFalls) {
+			// Throwable Objects should always fall
+			return true;
+		} else {
+			return this.y < 90;
+		}
 	}
 
 	isColliding(mo) {

@@ -10,9 +10,6 @@ const keyboard = new Keyboard();
 function init() {
 	canvas = document.getElementById("canvas");
 	world = new World(canvas, keyboard);
-
-	/* 	console.log("My Character is", world.character);
-	 */
 }
 
 // keyCode ist deprecated. key property nutzen: https://www.w3schools.com/Jsref/event_key_key.asp
@@ -32,6 +29,11 @@ document.addEventListener("keydown", (e) => {
 	if (e.key === "ArrowLeft") {
 		keyboard.LEFT = true;
 	}
+
+	if (e.key === "d") {
+		keyboard.D = true;
+		console.log(keyboard.D);
+	}
 });
 
 document.addEventListener("keyup", (e) => {
@@ -49,6 +51,11 @@ document.addEventListener("keyup", (e) => {
 
 	if (e.key === "ArrowLeft") {
 		keyboard.LEFT = false;
+	}
+
+	if (e.key === "d") {
+		keyboard.D = false;
+		console.log(keyboard.D);
 	}
 });
 

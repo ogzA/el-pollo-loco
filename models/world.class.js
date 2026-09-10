@@ -1,5 +1,9 @@
 import { level1 } from "../levels/level1.js";
+import { BottleBar } from "./bottle-bar.class.js";
 import { Character } from "./character.class.js";
+import { CoinBar } from "./coin-bar.class.js";
+import { StatusBar } from "./status-bar.class.js";
+import { ThrowableObject } from "./throwable-object.class.js";
 
 export class World {
 	character = new Character();
@@ -11,22 +15,39 @@ export class World {
 	statusBar = new StatusBar();
 	coinBar = new CoinBar();
 	bottleBar = new BottleBar();
+	throwableObjects = [];
 
 	constructor(_canvas, _keyboard) {
 		this.ctx = _canvas.getContext("2d");
 		this.canvas = _canvas;
 		this.keyboard = _keyboard;
-		this.draw();
 		this.setWorld();
-		this.checkCollisions();
+		this.draw();
+		this.run();
 	}
 
 	setWorld() {
 		this.character.world = this;
 	}
 
-	checkCollisions() {
+	run() {
 		setInterval(() => {
+			this.checkCollisions();
+			this.checkThrowObjects();
+		}, 500);
+	}
+
+	checkThrowObjects() {
+		if (this.keyboard.D) {
+			const bottle = new ThrowableObject(
+				this.character.x + 100,
+				this.character.y + 100,
+				this.character.otherDirection,
+			);
+			this.throwableObjects.push(bottle);
+		}
+	}
+
 	checkCollisions() {
 		this.level.enemies.forEach((enemy) => {
 			if (this.character.isColliding(enemy)) {
@@ -51,9 +72,11 @@ export class World {
 		this.addToMap(this.statusBar);
 		this.addToMap(this.coinBar);
 		this.addToMap(this.bottleBar);
-		this.ctx.translate(this.camera_x, 0); // Forwards
+		// -------------- Space for fixed objects ------------
+		this.ctx.translate(this.camera_x, 0); // Forwardss
 
 		this.addObjectsToMap(this.level.enemies);
+		this.addObjectsToMap(this.throwableObjects);
 		this.addToMap(this.character);
 
 		this.ctx.translate(-this.camera_x, 0);
