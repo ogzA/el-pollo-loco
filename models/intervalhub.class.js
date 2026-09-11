@@ -1,0 +1,18 @@
+export class IntervalHub {
+	// Speichert alle registrierten Interval-IDs
+	static allIntervals = [];
+
+	// Startet ein neues Intervall und
+	// fügt es dem Array allIntervals hinzu
+	static startInterval(func, timer) {
+		const newInterval = setInterval(func, timer);
+		IntervalHub.allIntervals.push(newInterval);
+		/* return newInterval; */
+	}
+
+	//Stoppt alle registrierten Intervalle und leert die Registry.
+	static stopAllIntervals() {
+		IntervalHub.allIntervals.forEach(clearInterval);
+		IntervalHub.allIntervals = [];
+	}
+}
