@@ -55,7 +55,17 @@ export class ImageHub {
 			"./assets/img/4_enemie_boss_chicken/2_alert/G12.png",
 		],
 		attack: [],
-		hurt: [],
+		hurt: [
+			"./assets/img/4_enemie_boss_chicken/4_hurt/G21.png",
+			"./assets/img/4_enemie_boss_chicken/4_hurt/G22.png",
+			"./assets/img/4_enemie_boss_chicken/4_hurt/G23.png",
+		],
+
+		dead: [
+			"./assets/img/4_enemie_boss_chicken/5_dead/G24.png",
+			"./assets/img/4_enemie_boss_chicken/5_dead/G25.png",
+			"./assets/img/4_enemie_boss_chicken/5_dead/G26.png",
+		],
 	};
 
 	static CHICKEN = {
@@ -106,6 +116,15 @@ export class ImageHub {
 			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
 			"./assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
 		],
+
+		endboss: [
+			"./assets/img/7_statusbars/2_statusbar_endboss/orange/orange100.png",
+			"./assets/img/7_statusbars/2_statusbar_endboss/orange/orange80.png",
+			"./assets/img/7_statusbars/2_statusbar_endboss/orange/orange60.png",
+			"./assets/img/7_statusbars/2_statusbar_endboss/orange/orange40.png",
+			"./assets/img/7_statusbars/2_statusbar_endboss/orange/orange20.png",
+			"./assets/img/7_statusbars/2_statusbar_endboss/orange/orange0.png",
+		],
 	};
 
 	static BOTTLES = {
@@ -118,7 +137,14 @@ export class ImageHub {
 			"./assets/img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
 			"./assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
 		],
-		splash: [],
+		splash: [
+			"./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
+			"./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
+		],
 	};
 
 	static COINS = {

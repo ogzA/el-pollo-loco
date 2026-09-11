@@ -2,6 +2,8 @@ import { level1 } from "../levels/level1.js";
 import { BottleBar } from "./bottle-bar.class.js";
 import { Character } from "./character.class.js";
 import { CoinBar } from "./coin-bar.class.js";
+import { EndbossBar } from "./endboss-bar.class.js";
+
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 
@@ -15,6 +17,7 @@ export class World {
 	statusBar = new StatusBar();
 	coinBar = new CoinBar();
 	bottleBar = new BottleBar();
+	endbossBar = new EndbossBar();
 	throwableObjects = [];
 
 	constructor(_canvas, _keyboard) {
@@ -33,6 +36,7 @@ export class World {
 	run() {
 		setInterval(() => {
 			this.checkCollisions();
+			this.checkBottleCollisions();
 			this.checkThrowObjects();
 		}, 500);
 	}
@@ -50,12 +54,29 @@ export class World {
 
 	checkCollisions() {
 		this.level.enemies.forEach((enemy) => {
-			if (this.character.isColliding(enemy)) {
+			if (this.character.isColliding(enemy) && !this.character.isHurt()) {
 				this.character.hit();
-				console.log(this.character.energy);
 				this.statusBar.setPercentage(this.character.energy);
 			}
 		});
+	}
+
+	checkBottleCollisions() {
+		const boss = this.getEndboss();
+
+		if (!boss) return;
+
+		this.throwableObjects.forEach((bottle) => {
+			if (bottle.isBroken) return;
+			if (bottle.isColliding(boss)) {
+				bottle.breakBottle();
+				boss.hit();
+				this.endbossBar.setPercentage(boss.energy);
+			}
+		});
+	}
+	getEndboss() {
+		return this.level.enemies.find((enemy) => enemy.isEndboss);
 	}
 
 	// Reihenfolge ist hier wichtig! Hinweis: Überlappung der Elemente
@@ -72,6 +93,7 @@ export class World {
 		this.addToMap(this.statusBar);
 		this.addToMap(this.coinBar);
 		this.addToMap(this.bottleBar);
+		this.addToMap(this.endbossBar);
 		// -------------- Space for fixed objects ------------
 		this.ctx.translate(this.camera_x, 0); // Forwardss
 
