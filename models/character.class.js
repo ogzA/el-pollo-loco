@@ -14,6 +14,7 @@ export class Character extends MovableObject {
 	height = 350;
 	width = 150;
 	showFrame = true;
+	lastThrow = 0;
 
 	constructor() {
 		super();
@@ -27,6 +28,7 @@ export class Character extends MovableObject {
 		this.applyGravity();
 
 		this.animate();
+		this.canThrow();
 	}
 
 	animate() {
@@ -62,5 +64,10 @@ export class Character extends MovableObject {
 				this.playAnimation(this.IMAGES_WALKING);
 			}
 		}, 50);
+	}
+
+	canThrow() {
+		const timepassed = (new Date().getTime() - this.lastThrow) / 1000;
+		return timepassed > 0.8;
 	}
 }

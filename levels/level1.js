@@ -3,6 +3,7 @@ import { Cloud } from "../models/cloud.class.js";
 import { Chicken } from "../models/chicken.class.js";
 import { Level } from "../models/level.class.js";
 import { FinalBoss } from "../models/final-boss.class.js";
+import { BottleObject } from "../models/bottle-object.class.js";
 
 export const level1 = new Level(
 	[new Chicken(), new Chicken(), new Chicken(), new FinalBoss()],
@@ -81,5 +82,15 @@ export const level1 = new Level(
 			"./assets/img/5_background/layers/1_first_layer/2.png",
 			1024 * 3,
 		),
+	],
+	[
+		new BottleObject(),
+		new BottleObject(),
+		new BottleObject(),
+		new BottleObject(),
+		new BottleObject(),
+		new BottleObject(),
+		new BottleObject(),
+		new BottleObject(),
 	],
 );

@@ -1,5 +1,6 @@
 import { level1 } from "../levels/level1.js";
 import { BottleBar } from "./bottle-bar.class.js";
+import { BottleObject } from "./bottle-object.class.js";
 import { Character } from "./character.class.js";
 import { CoinBar } from "./coin-bar.class.js";
 import { EndbossBar } from "./endboss-bar.class.js";
@@ -19,6 +20,7 @@ export class World {
 	bottleBar = new BottleBar();
 	endbossBar = new EndbossBar();
 	throwableObjects = [];
+	MAX_BOTTLES = 8;
 
 	constructor(_canvas, _keyboard) {
 		this.ctx = _canvas.getContext("2d");
@@ -38,17 +40,41 @@ export class World {
 			this.checkCollisions();
 			this.checkBottleCollisions();
 			this.checkThrowObjects();
-		}, 500);
+			this.checkCollectableCollisions();
+		}, 50);
+	}
+
+	checkCollectableCollisions() {
+		for (let i = this.level.collectables.length - 1; i >= 0; i--) {
+			const item = this.level.collectables[i];
+			if (this.character.isColliding(item)) {
+				this.character.bottles++;
+				this.level.collectables.splice(i, 1);
+				this.bottleBar.setPercentage(this.getBottlePercentage());
+			}
+		}
+	}
+
+	getBottlePercentage() {
+		return (this.character.bottles / this.MAX_BOTTLES) * 100;
 	}
 
 	checkThrowObjects() {
-		if (this.keyboard.D) {
+		if (
+			this.keyboard.D &&
+			this.character.bottles > 0 &&
+			this.character.canThrow()
+		) {
 			const bottle = new ThrowableObject(
 				this.character.x + 100,
 				this.character.y + 100,
 				this.character.otherDirection,
 			);
 			this.throwableObjects.push(bottle);
+			this.character.bottles--;
+			this.character.lastThrow = new Date().getTime();
+
+			this.bottleBar.setPercentage(this.getBottlePercentage());
 		}
 	}
 
@@ -99,6 +125,7 @@ export class World {
 
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.throwableObjects);
+		this.addObjectsToMap(this.level.collectables);
 		this.addToMap(this.character);
 
 		this.ctx.translate(-this.camera_x, 0);

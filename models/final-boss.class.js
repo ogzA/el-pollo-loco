@@ -29,7 +29,8 @@ export class FinalBoss extends MovableObject {
 	}
 
 	animate() {
-		IntervalHub.startInterval(this.moveLeft());
+		// Hier muss moveLeft gefixt werden!
+		IntervalHub.startInterval(() => this.moveLeft());
 		setInterval(() => {
 			if (this.isDead()) {
 				this.playAnimation(this.IMAGES_DEAD);
