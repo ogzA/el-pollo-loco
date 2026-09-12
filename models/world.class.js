@@ -4,6 +4,7 @@ import { BottleObject } from "./bottle-object.class.js";
 import { Character } from "./character.class.js";
 import { CoinBar } from "./coin-bar.class.js";
 import { EndbossBar } from "./endboss-bar.class.js";
+import { IntervalHub } from "./intervalhub.class.js";
 
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
@@ -41,6 +42,7 @@ export class World {
 			this.checkBottleCollisions();
 			this.checkThrowObjects();
 			this.checkCollectableCollisions();
+			this.checkEndbossAlert();
 		}, 50);
 	}
 
@@ -98,9 +100,29 @@ export class World {
 				bottle.breakBottle();
 				boss.hit();
 				this.endbossBar.setPercentage(boss.energy);
+				if (boss.isDead()) {
+					console.log("game is ending.");
+					this.endGame();
+					console.log("game end.");
+				}
 			}
 		});
 	}
+
+	checkEndbossAlert() {
+		const boss = this.getEndboss();
+		if (!boss || boss.isAlerted) return;
+		if (this.character.x > boss.x - 500) {
+			boss.startAlert();
+		}
+	}
+
+	endGame() {
+		setTimeout(() => {
+			IntervalHub.stopAllIntervals();
+		}, 1500);
+	}
+
 	getEndboss() {
 		return this.level.enemies.find((enemy) => enemy.isEndboss);
 	}
