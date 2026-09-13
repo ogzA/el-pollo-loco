@@ -40,6 +40,8 @@ export class Character extends MovableObject {
 
 	animate() {
 		IntervalHub.startInterval(() => {
+			if (this.isDead()) return;
+
 			if (
 				this.world.keyboard.RIGHT &&
 				this.x < this.world.level.level_end_x
@@ -75,7 +77,7 @@ export class Character extends MovableObject {
 
 	canThrow() {
 		const timepassed = (new Date().getTime() - this.lastThrow) / 1000;
-		return timepassed > 0.8;
+		return timepassed > 0.8 && !this.isDead();
 	}
 
 	canCollectBottle() {
