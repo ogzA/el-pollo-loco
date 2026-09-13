@@ -12,6 +12,12 @@ export class FinalBoss extends MovableObject {
 	y = -40;
 	speed = 0.5;
 	showFrame = true;
+	offset = {
+		top: 75,
+		right: 5,
+		bottom: 15,
+		left: 15,
+	};
 	isEndboss = true;
 	isAlerted = false;
 	alertStarted = 0;

@@ -5,6 +5,12 @@ import { MovableObject } from "./movable-object.class.js";
 export class ChickenSmall extends MovableObject {
 	IMAGES_WALKING = ImageHub.CHICKEN_SMALL.move;
 	showFrame = true;
+	offset = {
+		top: 5,
+		right: 7,
+		bottom: 5,
+		left: 7,
+	};
 
 	constructor(_index) {
 		super();

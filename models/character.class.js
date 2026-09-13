@@ -14,6 +14,12 @@ export class Character extends MovableObject {
 	height = 350;
 	width = 150;
 	showFrame = true;
+	offset = {
+		top: 135,
+		right: 20,
+		bottom: 20,
+		left: 20,
+	};
 	lastThrow = 0;
 	MAX_BOTTLES = 8;
 

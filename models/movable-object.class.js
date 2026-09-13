@@ -30,11 +30,14 @@ export class MovableObject extends DrawableObject {
 	}
 
 	isColliding(mo) {
+		// In draw() ist x beim Spiegeln negativ, deshalb hier frisch berechnen
+		this.getRealFrame();
+		mo.getRealFrame();
 		return (
-			this.x + this.width > mo.x &&
-			this.y + this.height > mo.y &&
-			this.x < mo.x + mo.width &&
-			this.y < mo.y + mo.height
+			this.rX + this.rW > mo.rX &&
+			this.rY + this.rH > mo.rY &&
+			this.rX < mo.rX + mo.rW &&
+			this.rY < mo.rY + mo.rH
 		);
 	}
 
