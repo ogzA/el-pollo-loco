@@ -16,6 +16,9 @@ export class MovableObject extends DrawableObject {
 			if (this.isAboveGround() || this.speedY > 0) {
 				this.y -= this.speedY;
 				this.speedY -= this.acceleration;
+			} else {
+				// Am Boden zurücksetzen, damit speedY < 0 wirklich "fällt" bedeutet
+				this.speedY = 0;
 			}
 		}, 1000 / 25);
 	}
@@ -39,6 +42,10 @@ export class MovableObject extends DrawableObject {
 			this.rX < mo.rX + mo.rW &&
 			this.rY < mo.rY + mo.rH
 		);
+	}
+
+	isCollidingFromTop(mo) {
+		return this.isColliding(mo) && this.speedY < 0;
 	}
 
 	hit(damage = 2) {

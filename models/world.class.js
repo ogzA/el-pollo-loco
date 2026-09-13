@@ -90,12 +90,23 @@ export class World {
 	}
 
 	checkCollisions() {
+		let stomped = false;
 		this.level.enemies.forEach((enemy) => {
-			if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+			if (enemy.isDead()) return;
+
+			if (!enemy.isEndboss && this.character.isCollidingFromTop(enemy)) {
+				enemy.die();
+				stomped = true;
+			} else if (
+				this.character.isColliding(enemy) &&
+				!this.character.isHurt()
+			) {
 				this.character.hit();
 				this.statusBar.setPercentage(this.character.energy);
 			}
 		});
+		// Nach der Schleife springen, sonst zählt ein Nachbar-Huhn als seitlicher Treffer
+		if (stomped) this.character.jump();
 	}
 
 	checkBottleCollisions() {

@@ -4,6 +4,7 @@ import { MovableObject } from "./movable-object.class.js";
 
 export class ChickenSmall extends MovableObject {
 	IMAGES_WALKING = ImageHub.CHICKEN_SMALL.move;
+	IMAGES_DEAD = ImageHub.CHICKEN_SMALL.dead;
 	showFrame = true;
 	offset = {
 		top: 5,
@@ -16,6 +17,7 @@ export class ChickenSmall extends MovableObject {
 		super();
 		this.loadImage(this.IMAGES_WALKING[0]);
 		this.loadImages(this.IMAGES_WALKING);
+		this.loadImages(this.IMAGES_DEAD);
 
 		this.height = 60;
 		this.width = 60;
@@ -26,13 +28,23 @@ export class ChickenSmall extends MovableObject {
 		this.animate();
 	}
 
+	die() {
+		this.energy = 0;
+	}
+
 	animate() {
 		IntervalHub.startInterval(() => {
-			this.moveLeft();
+			if (!this.isDead()) {
+				this.moveLeft();
+			}
 		}, 1000 / 60);
 
 		IntervalHub.startInterval(() => {
-			this.playAnimation(this.IMAGES_WALKING);
+			if (this.isDead()) {
+				this.playAnimation(this.IMAGES_DEAD);
+			} else {
+				this.playAnimation(this.IMAGES_WALKING);
+			}
 		}, 200);
 	}
 }
