@@ -32,7 +32,6 @@ document.addEventListener("keydown", (e) => {
 
 	if (e.key === "d") {
 		keyboard.D = true;
-		console.log(keyboard.D);
 	}
 });
 
@@ -55,7 +54,6 @@ document.addEventListener("keyup", (e) => {
 
 	if (e.key === "d") {
 		keyboard.D = false;
-		console.log(keyboard.D);
 	}
 });
 
