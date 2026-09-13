@@ -1,6 +1,5 @@
 import { level1 } from "../levels/level1.js";
 import { BottleBar } from "./bottle-bar.class.js";
-import { BottleObject } from "./bottle-object.class.js";
 import { Character } from "./character.class.js";
 import { CoinBar } from "./coin-bar.class.js";
 import { EndbossBar } from "./endboss-bar.class.js";
@@ -22,6 +21,7 @@ export class World {
 	endbossBar = new EndbossBar();
 	throwableObjects = [];
 	MAX_BOTTLES = 8;
+	MAX_COINS = 20;
 
 	constructor(_canvas, _keyboard) {
 		this.ctx = _canvas.getContext("2d");
@@ -37,7 +37,7 @@ export class World {
 	}
 
 	run() {
-		setInterval(() => {
+		IntervalHub.startInterval(() => {
 			this.checkCollisions();
 			this.checkBottleCollisions();
 			this.checkThrowObjects();
@@ -50,15 +50,24 @@ export class World {
 		for (let i = this.level.collectables.length - 1; i >= 0; i--) {
 			const item = this.level.collectables[i];
 			if (this.character.isColliding(item)) {
-				this.character.bottles++;
+				if (item.isCoin) {
+					this.character.coins++;
+					this.coinBar.setPercentage(this.getCoinPercentage());
+				} else if (item.isBottle) {
+					this.character.bottles++;
+					this.bottleBar.setPercentage(this.getBottlePercentage());
+				}
 				this.level.collectables.splice(i, 1);
-				this.bottleBar.setPercentage(this.getBottlePercentage());
 			}
 		}
 	}
 
 	getBottlePercentage() {
 		return (this.character.bottles / this.MAX_BOTTLES) * 100;
+	}
+
+	getCoinPercentage() {
+		return (this.character.coins / this.MAX_COINS) * 100;
 	}
 
 	checkThrowObjects() {

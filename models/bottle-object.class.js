@@ -1,6 +1,7 @@
 import { Collectable } from "./collectable-objects.class.js";
 
 export class BottleObject extends Collectable {
+	isBottle = true;
 	constructor() {
 		super();
 		this.y = 350;

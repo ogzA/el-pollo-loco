@@ -8,6 +8,7 @@ export class MovableObject extends DrawableObject {
 	showFrame = false;
 	energy = 100;
 	bottles = 0;
+	coins = 0;
 	lastHit = 0;
 
 	applyGravity() {
