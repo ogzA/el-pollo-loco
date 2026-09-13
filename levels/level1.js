@@ -6,8 +6,22 @@ import { FinalBoss } from "../models/final-boss.class.js";
 import { BottleObject } from "../models/bottle-object.class.js";
 import { CoinObject } from "../models/coin-object.js";
 
+const enemies = [];
+for (let i = 0; i < 7; i++) {
+	enemies.push(new Chicken(i));
+}
+enemies.push(new FinalBoss());
+
+const collectables = [];
+for (let i = 0; i < 12; i++) {
+	collectables.push(new BottleObject());
+}
+for (let i = 0; i < 20; i++) {
+	collectables.push(new CoinObject());
+}
+
 export const level1 = new Level(
-	[new Chicken(), new Chicken(), new Chicken(), new FinalBoss()],
+	enemies,
 	[new Cloud()],
 	[
 		new BackgroundObject("./assets/img/5_background/layers/air.png", -1024),
@@ -84,73 +98,5 @@ export const level1 = new Level(
 			1024 * 3,
 		),
 	],
-	[
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new BottleObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-		new CoinObject(),
-	],
+	collectables,
 );

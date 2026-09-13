@@ -3,18 +3,17 @@ import { IntervalHub } from "./intervalhub.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
 export class Chicken extends MovableObject {
-	IMAGES_WALKING = [];
 	IMAGES_WALKING = ImageHub.CHICKEN.move;
 	showFrame = true;
 
-	constructor() {
+	constructor(_index) {
 		super();
 		this.loadImage(this.IMAGES_WALKING[0]);
 		this.loadImages(this.IMAGES_WALKING);
 
 		this.height = 100;
 		this.y = 340;
-		this.x = 500 + Math.random() * 500;
+		this.x = 600 + _index * 150 + Math.random() * 60;
 		this.speed = 0.15 + Math.random() * 0.25;
 
 		this.animate();
