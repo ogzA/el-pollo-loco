@@ -11,6 +11,6 @@ export class CoinObject extends Collectable {
 		this.loadImage("./assets/img/8_coin/coin_1.png");
 
 		this.x = 500 + Math.random() * 2000;
-		this.y = 100 + Math.random() * 400;
+		this.y = 100 + Math.random() * 250;
 	}
 }
