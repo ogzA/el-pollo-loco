@@ -30,7 +30,7 @@ document.addEventListener("keydown", (e) => {
 		keyboard.LEFT = true;
 	}
 
-	if (e.key === "d") {
+	if (e.key === "d" || e.key === "D") {
 		keyboard.D = true;
 	}
 });
@@ -52,7 +52,7 @@ document.addEventListener("keyup", (e) => {
 		keyboard.LEFT = false;
 	}
 
-	if (e.key === "d") {
+	if (e.key === "d" || e.key === "D") {
 		keyboard.D = false;
 	}
 });
