@@ -15,6 +15,7 @@ export class Character extends MovableObject {
 	width = 150;
 	showFrame = true;
 	lastThrow = 0;
+	MAX_BOTTLES = 8;
 
 	constructor() {
 		super();
@@ -69,5 +70,9 @@ export class Character extends MovableObject {
 	canThrow() {
 		const timepassed = (new Date().getTime() - this.lastThrow) / 1000;
 		return timepassed > 0.8;
+	}
+
+	canCollectBottle() {
+		return this.bottles < this.MAX_BOTTLES;
 	}
 }

@@ -20,7 +20,6 @@ export class World {
 	bottleBar = new BottleBar();
 	endbossBar = new EndbossBar();
 	throwableObjects = [];
-	MAX_BOTTLES = 8;
 	MAX_COINS = 20;
 
 	constructor(_canvas, _keyboard) {
@@ -49,21 +48,22 @@ export class World {
 	checkCollectableCollisions() {
 		for (let i = this.level.collectables.length - 1; i >= 0; i--) {
 			const item = this.level.collectables[i];
-			if (this.character.isColliding(item)) {
-				if (item.isCoin) {
-					this.character.coins++;
-					this.coinBar.setPercentage(this.getCoinPercentage());
-				} else if (item.isBottle) {
-					this.character.bottles++;
-					this.bottleBar.setPercentage(this.getBottlePercentage());
-				}
+			if (!this.character.isColliding(item)) continue;
+
+			if (item.isCoin) {
+				this.character.coins++;
 				this.level.collectables.splice(i, 1);
+				this.coinBar.setPercentage(this.getCoinPercentage());
+			} else if (item.isBottle && this.character.canCollectBottle()) {
+				this.character.bottles++;
+				this.level.collectables.splice(i, 1);
+				this.bottleBar.setPercentage(this.getBottlePercentage());
 			}
 		}
 	}
 
 	getBottlePercentage() {
-		return (this.character.bottles / this.MAX_BOTTLES) * 100;
+		return (this.character.bottles / this.character.MAX_BOTTLES) * 100;
 	}
 
 	getCoinPercentage() {

@@ -23,7 +23,7 @@ export class EndbossBar extends DrawableObject {
 	}
 
 	resolveImageIndex() {
-		if (this.percentage == 100) {
+		if (this.percentage >= 100) {
 			return 0;
 		} else if (this.percentage > 80) {
 			return 1;
