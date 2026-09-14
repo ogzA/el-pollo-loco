@@ -23,6 +23,7 @@ function startGame() {
 	initLevel();
 	init();
 	AudioHub.playOne(AudioHub.GAME_START);
+	AudioHub.playOne(AudioHub.BACKGROUND_MUSIC);
 }
 
 /**
@@ -33,6 +34,7 @@ function restartGame() {
 	initLevel();
 	init();
 	AudioHub.playOne(AudioHub.GAME_START);
+	AudioHub.playOne(AudioHub.BACKGROUND_MUSIC);
 }
 
 /**
@@ -59,12 +61,15 @@ function closeInfo() {
 
 /**
  * Turns the sound on or off and saves the choice in the local storage.
+ * When the sound is turned on during a game, the background music starts again.
  */
 function toggleMute() {
 	AudioHub.isMuted = !AudioHub.isMuted;
 	localStorage.setItem("isMuted", AudioHub.isMuted);
 	if (AudioHub.isMuted) {
 		AudioHub.stopAll();
+	} else if (world && !world.gameOver) {
+		AudioHub.playOne(AudioHub.BACKGROUND_MUSIC);
 	}
 	updateMuteButton();
 }

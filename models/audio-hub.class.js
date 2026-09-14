@@ -53,6 +53,9 @@ export class AudioHub {
 		"./assets/sounds/throwable/bottleBreak.mp3",
 	);
 	static GAME_START = new MyAudio("./assets/sounds/game/gameStart.mp3");
+	static BACKGROUND_MUSIC = new MyAudio(
+		"./assets/sounds/sonican-upbeat-latin-guitar-30-seconds-478219.mp3",
+	);
 
 	// Array, das alle definierten Audio-Dateien enthält
 	static allSounds = [
@@ -69,6 +72,7 @@ export class AudioHub {
 		AudioHub.BOTTLE_COLLECT,
 		AudioHub.BOTTLE_BREAK,
 		AudioHub.GAME_START,
+		AudioHub.BACKGROUND_MUSIC,
 	];
 
 	// Am Anfang stumm, der Nutzer kann den Ton selbst einschalten (Local Storage)
@@ -106,3 +110,7 @@ export class AudioHub {
 		sound.file.pause();
 	}
 }
+
+// Hintergrundmusik läuft in Schleife und etwas leiser als die Effekte
+AudioHub.BACKGROUND_MUSIC.file.loop = true;
+AudioHub.BACKGROUND_MUSIC.file.volume = 0.15;
