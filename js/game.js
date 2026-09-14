@@ -1,9 +1,7 @@
-import { Character } from "../models/character.class.js";
-import { Chicken } from "../models/chicken.class.js";
 import { Keyboard } from "../models/keyboard.class.js";
 import { World } from "../models/world.class.js";
 import { initLevel } from "../levels/level1.js";
-import { AudioHub } from "../models/AudioHub.class.js";
+import { AudioHub } from "../models/audio-hub.class.js";
 
 let canvas;
 let world;

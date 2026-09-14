@@ -1,7 +1,7 @@
 import { DrawableObject } from "./drawable-object.class.js";
 import { ImageHub } from "./image-hub.class.js";
 
-export class StatusBar extends DrawableObject {
+export class HealthBar extends DrawableObject {
 	STATUS_IMAGES = ImageHub.STATUS_BAR.health;
 
 	percentage = 100;

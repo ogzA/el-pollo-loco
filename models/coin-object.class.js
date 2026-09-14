@@ -1,6 +1,6 @@
-import { Collectable } from "./collectable-objects.class.js";
+import { CollectableObject } from "./collectable-object.class.js";
 
-export class CoinObject extends Collectable {
+export class CoinObject extends CollectableObject {
 	isCoin = true;
 
 	constructor() {

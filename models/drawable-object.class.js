@@ -25,7 +25,6 @@ export class DrawableObject {
 	}
 
 	draw(ctx) {
-		this.getRealFrame();
 		ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 	}
 
@@ -34,17 +33,6 @@ export class DrawableObject {
 		this.rY = this.y + this.offset.top;
 		this.rW = this.width - this.offset.left - this.offset.right;
 		this.rH = this.height - this.offset.top - this.offset.bottom;
-	}
-
-	// blauer Rahmen
-	drawFrame(ctx) {
-		if (this.showFrame) {
-			ctx.beginPath();
-			ctx.lineWidth = 5;
-			ctx.strokeStyle = "blue";
-			ctx.rect(this.rX, this.rY, this.rW, this.rH);
-			ctx.stroke();
-		}
 	}
 
 	loadImages(arr) {

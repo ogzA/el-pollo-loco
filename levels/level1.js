@@ -3,9 +3,9 @@ import { Cloud } from "../models/cloud.class.js";
 import { Chicken } from "../models/chicken.class.js";
 import { ChickenSmall } from "../models/chicken-small.class.js";
 import { Level } from "../models/level.class.js";
-import { FinalBoss } from "../models/final-boss.class.js";
+import { Endboss } from "../models/endboss.class.js";
 import { BottleObject } from "../models/bottle-object.class.js";
-import { CoinObject } from "../models/coin-object.js";
+import { CoinObject } from "../models/coin-object.class.js";
 
 export let level1;
 
@@ -26,7 +26,7 @@ function createEnemies() {
 	for (let i = 0; i < 7; i++) {
 		enemies.push(new ChickenSmall(i));
 	}
-	enemies.push(new FinalBoss());
+	enemies.push(new Endboss());
 	return enemies;
 }
 

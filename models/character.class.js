@@ -1,6 +1,6 @@
-import { AudioHub } from "./AudioHub.class.js";
+import { AudioHub } from "./audio-hub.class.js";
 import { ImageHub } from "./image-hub.class.js";
-import { IntervalHub } from "./intervalhub.class.js";
+import { IntervalHub } from "./interval-hub.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
 export class Character extends MovableObject {
@@ -16,7 +16,6 @@ export class Character extends MovableObject {
 	speed = 10;
 	height = 350;
 	width = 150;
-	showFrame = true;
 	offset = {
 		top: 135,
 		right: 20,
@@ -43,7 +42,6 @@ export class Character extends MovableObject {
 		this.applyGravity();
 		this.animate();
 		this.animateIdle();
-		this.canThrow();
 	}
 
 	animate() {
@@ -56,12 +54,12 @@ export class Character extends MovableObject {
 		if (this.isDead()) return;
 		this.updateLastMove();
 		this.moveWithKeyboard();
-		this.world.camera_x = -this.x + 100;
+		this.world.cameraX = -this.x + 100;
 	}
 
 	moveWithKeyboard() {
 		const keyboard = this.world.keyboard;
-		if (keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+		if (keyboard.RIGHT && this.x < this.world.level.levelEndX) {
 			this.moveRight();
 			this.otherDirection = false;
 		}

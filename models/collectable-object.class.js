@@ -1,5 +1,5 @@
 import { DrawableObject } from "./drawable-object.class.js";
 
-export class Collectable extends DrawableObject {
+export class CollectableObject extends DrawableObject {
 	isThrowable = false;
 }

@@ -1,5 +1,5 @@
 import { ImageHub } from "./image-hub.class.js";
-import { IntervalHub } from "./intervalhub.class.js";
+import { IntervalHub } from "./interval-hub.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
 export class Cloud extends MovableObject {

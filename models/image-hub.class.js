@@ -59,7 +59,7 @@ export class ImageHub {
 		],
 	};
 
-	static FINALBOSS = {
+	static ENDBOSS = {
 		move: [
 			"./assets/img/4_enemie_boss_chicken/1_walk/G1.png",
 			"./assets/img/4_enemie_boss_chicken/1_walk/G2.png",

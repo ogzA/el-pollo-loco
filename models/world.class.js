@@ -1,12 +1,12 @@
 import { level1 } from "../levels/level1.js";
-import { AudioHub } from "./AudioHub.class.js";
+import { AudioHub } from "./audio-hub.class.js";
 import { BottleBar } from "./bottle-bar.class.js";
 import { Character } from "./character.class.js";
 import { CoinBar } from "./coin-bar.class.js";
 import { EndbossBar } from "./endboss-bar.class.js";
-import { IntervalHub } from "./intervalhub.class.js";
+import { IntervalHub } from "./interval-hub.class.js";
 
-import { StatusBar } from "./status-bar.class.js";
+import { HealthBar } from "./health-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 
 export class World {
@@ -15,8 +15,8 @@ export class World {
 	level = level1;
 	ctx;
 	keyboard;
-	camera_x = 0;
-	statusBar = new StatusBar();
+	cameraX = 0;
+	healthBar = new HealthBar();
 	coinBar = new CoinBar();
 	bottleBar = new BottleBar();
 	endbossBar = new EndbossBar();
@@ -119,7 +119,7 @@ export class World {
 				stomped = true;
 			} else if (this.canHurtCharacter(enemy)) {
 				this.character.hit(enemy.damage);
-				this.statusBar.setPercentage(this.character.energy);
+				this.healthBar.setPercentage(this.character.energy);
 			}
 		});
 		// Nach der Schleife springen, sonst zählt ein Nachbar-Huhn als seitlicher Treffer
@@ -217,14 +217,14 @@ export class World {
 	// Reihenfolge ist hier wichtig! Hinweis: Überlappung der Elemente
 	draw() {
 		this.clearCanvas(this.canvas);
-		this.ctx.translate(this.camera_x, 0);
+		this.ctx.translate(this.cameraX, 0);
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
-		this.ctx.translate(-this.camera_x, 0); // Back
+		this.ctx.translate(-this.cameraX, 0); // Back
 		this.drawFixedObjects();
-		this.ctx.translate(this.camera_x, 0); // Forwardss
+		this.ctx.translate(this.cameraX, 0); // Forwardss
 		this.drawMovableObjects();
-		this.ctx.translate(-this.camera_x, 0);
+		this.ctx.translate(-this.cameraX, 0);
 
 		// Arrow Function bindet `this` an die World-Instanz.
 		// Bei ...function(){this.draw}  ginge der Kontext verloren und die Schleife bricht ab.
@@ -233,7 +233,7 @@ export class World {
 
 	// -------------- Space for fixed objects ------------
 	drawFixedObjects() {
-		this.addToMap(this.statusBar);
+		this.addToMap(this.healthBar);
 		this.addToMap(this.coinBar);
 		this.addToMap(this.bottleBar);
 		this.addToMap(this.endbossBar);
@@ -258,7 +258,6 @@ export class World {
 		}
 
 		mo.draw(this.ctx);
-		mo.drawFrame(this.ctx);
 
 		if (mo.otherDirection) {
 			this.flipImageBack(mo);

@@ -1,6 +1,6 @@
-import { AudioHub } from "./AudioHub.class.js";
+import { AudioHub } from "./audio-hub.class.js";
 import { ImageHub } from "./image-hub.class.js";
-import { IntervalHub } from "./intervalhub.class.js";
+import { IntervalHub } from "./interval-hub.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
 export class ThrowableObject extends MovableObject {

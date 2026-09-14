@@ -1,18 +1,17 @@
-import { AudioHub } from "./AudioHub.class.js";
+import { AudioHub } from "./audio-hub.class.js";
 import { ImageHub } from "./image-hub.class.js";
-import { IntervalHub } from "./intervalhub.class.js";
+import { IntervalHub } from "./interval-hub.class.js";
 import { MovableObject } from "./movable-object.class.js";
 
-export class FinalBoss extends MovableObject {
-	IMAGES_ALERT = ImageHub.FINALBOSS.alert;
-	IMAGES_WALKING = ImageHub.FINALBOSS.move;
-	IMAGES_HURT = ImageHub.FINALBOSS.hurt;
-	IMAGES_DEAD = ImageHub.FINALBOSS.dead;
+export class Endboss extends MovableObject {
+	IMAGES_ALERT = ImageHub.ENDBOSS.alert;
+	IMAGES_WALKING = ImageHub.ENDBOSS.move;
+	IMAGES_HURT = ImageHub.ENDBOSS.hurt;
+	IMAGES_DEAD = ImageHub.ENDBOSS.dead;
 	height = 500;
 	width = 400;
 	y = -40;
 	speed = 0.5;
-	showFrame = true;
 	offset = {
 		top: 75,
 		right: 5,
@@ -65,10 +64,10 @@ export class FinalBoss extends MovableObject {
 			}
 		}, 1000 / 60);
 
-		IntervalHub.startInterval(() => this.playBossAnimation(), 100);
+		IntervalHub.startInterval(() => this.playEndbossAnimation(), 100);
 	}
 
-	playBossAnimation() {
+	playEndbossAnimation() {
 		if (this.isDead()) {
 			this.playAnimation(this.IMAGES_DEAD);
 		} else if (this.isHurt()) {

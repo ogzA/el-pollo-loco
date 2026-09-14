@@ -1,12 +1,11 @@
 import { DrawableObject } from "./drawable-object.class.js";
-import { IntervalHub } from "./intervalhub.class.js";
+import { IntervalHub } from "./interval-hub.class.js";
 
 export class MovableObject extends DrawableObject {
 	speed = 0.15;
 	otherDirection = false;
 	speedY = 0;
 	acceleration = 2.5;
-	showFrame = false;
 	energy = 100;
 	bottles = 0;
 	coins = 0;
