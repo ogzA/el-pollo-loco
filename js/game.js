@@ -111,7 +111,9 @@ function addButtonEvents() {
 		.getElementById("restart-button")
 		.addEventListener("click", restartGame);
 	document.getElementById("home-button").addEventListener("click", goHome);
-	document.getElementById("mute-button").addEventListener("click", toggleMute);
+	document
+		.getElementById("mute-button")
+		.addEventListener("click", toggleMute);
 	document
 		.getElementById("close-info-button")
 		.addEventListener("click", closeInfo);
@@ -166,8 +168,5 @@ document.addEventListener("keyup", (e) => {
 	}
 });
 
-/* window.keyboard = keyboard; */
-// to test in browser
-/* window.character = character; */
-
-window.addEventListener("load", initPage);
+// Nicht auf "load" warten: auf dem iPhone kommt "load" erst spät (Bilder und Sounds)
+document.addEventListener("DOMContentLoaded", initPage);
