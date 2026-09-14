@@ -5,6 +5,7 @@ import { MovableObject } from "./movable-object.class.js";
 export class ThrowableObject extends MovableObject {
 	alwaysFalls = true;
 	isBroken = false;
+	brokenTime = 0;
 
 	FLYING_BOTTLES = ImageHub.BOTTLES.flying;
 	SPLASH_BOTTLES = ImageHub.BOTTLES.splash;
@@ -49,8 +50,14 @@ export class ThrowableObject extends MovableObject {
 
 	breakBottle() {
 		this.isBroken = true;
+		this.brokenTime = new Date().getTime();
 		this.currentImage = 0;
 		this.speedY = 0;
 		this.speed = 0;
+	}
+
+	isSplashOver() {
+		const timepassed = (new Date().getTime() - this.brokenTime) / 1000;
+		return this.isBroken && timepassed > 0.3;
 	}
 }

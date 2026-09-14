@@ -39,6 +39,8 @@ export class World {
 		IntervalHub.startInterval(() => {
 			this.checkCollisions();
 			this.checkBottleCollisions();
+			this.checkBottleChickenCollisions();
+			this.removeBottles();
 			this.checkThrowObjects();
 			this.checkCollectableCollisions();
 			this.checkEndbossAlert();
@@ -121,12 +123,31 @@ export class World {
 				boss.hit();
 				this.endbossBar.setPercentage(boss.energy);
 				if (boss.isDead()) {
-					console.log("game is ending.");
 					this.endGame();
-					console.log("game end.");
 				}
 			}
 		});
+	}
+
+	checkBottleChickenCollisions() {
+		this.throwableObjects.forEach((bottle) => {
+			this.level.enemies.forEach((enemy) => {
+				if (bottle.isBroken || enemy.isEndboss || enemy.isDead()) return;
+				if (bottle.isColliding(enemy)) {
+					bottle.breakBottle();
+					enemy.die();
+				}
+			});
+		});
+	}
+
+	removeBottles() {
+		for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
+			const bottle = this.throwableObjects[i];
+			if (bottle.isSplashOver() || bottle.y > 480) {
+				this.throwableObjects.splice(i, 1);
+			}
+		}
 	}
 
 	checkEndbossAlert() {
