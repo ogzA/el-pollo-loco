@@ -12,6 +12,7 @@ html {
 body {
 	display: grid;
 	justify-content: center;
+	align-content: center;
 	background-image: url(./assets/img/background-body.png);
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -19,16 +20,28 @@ body {
 	object-fit: cover;
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 }
 
 h1 {
 	text-align: center;
 	font-size: 48px;
 	color: #8b2500;
+
+	@media (max-height: 600px) {
+		display: none;
+	}
+
+	@media (orientation: portrait) {
+		display: none;
+	}
 }
 
 canvas {
 	background-color: black;
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 .d-none {
@@ -47,14 +60,32 @@ button {
 
 .icon-button {
 	img {
-		width: 64px;
+		width: 100%;
 	}
 }
 
 .game-container {
 	position: relative;
-	width: 1024px;
-	height: 480px;
+	width: min(1024px, 100vw);
+	aspect-ratio: 1024 / 480;
+
+	@media (max-height: 600px) {
+		width: min(1024px, 100vw, calc(100dvh * 1024 / 480));
+	}
+
+	@media (orientation: portrait) {
+		display: none;
+	}
+}
+
+:fullscreen {
+	h1 {
+		display: none;
+	}
+
+	.game-container {
+		width: min(100vw, calc(100dvh * 1024 / 480));
+	}
 }
 
 .start-screen {
@@ -66,19 +97,21 @@ button {
 
 	.play-button {
 		position: absolute;
-		top: 10px;
+		top: 2%;
 		left: 50%;
+		width: 25%;
 		transform: translateX(-50%);
 
 		img {
-			width: 260px;
+			width: 100%;
 		}
 	}
 
 	.info-button {
 		position: absolute;
-		top: 10px;
-		right: 10px;
+		top: 2%;
+		right: 1%;
+		width: 6.25%;
 	}
 }
 
@@ -89,28 +122,86 @@ button {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 24px;
+	gap: 5%;
 	background-color: rgba(0, 0, 0, 0.6);
 
 	.end-image {
-		max-width: 600px;
-		max-height: 300px;
+		max-width: 58%;
+		max-height: 62%;
 	}
 
 	.end-buttons {
 		display: flex;
-		gap: 40px;
+		justify-content: center;
+		gap: 16px;
+		width: 22%;
 
-		img {
-			width: 96px;
+		button {
+			flex: 1;
 		}
 	}
 }
 
 .mute-button {
 	position: absolute;
-	top: 10px;
-	right: 240px;
+	top: 19%;
+	right: 1%;
+	width: 6.25%;
+}
+
+.fullscreen-button {
+	position: absolute;
+	top: 35%;
+	right: 1%;
+	width: 6.25%;
+}
+
+.mobile-buttons {
+	display: none;
+	position: absolute;
+	left: 2%;
+	right: 2%;
+	bottom: 3%;
+	justify-content: space-between;
+
+	div {
+		display: flex;
+		gap: 16px;
+		width: 20%;
+	}
+
+	button {
+		flex: 1;
+		touch-action: none;
+	}
+
+	img {
+		width: 100%;
+		user-select: none;
+		-webkit-user-select: none;
+		-webkit-touch-callout: none;
+	}
+
+	@media (pointer: coarse) {
+		display: flex;
+	}
+}
+
+.rotate-device {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100dvh;
+	padding: 24px;
+	text-align: center;
+	font-size: 32px;
+	color: #8b2500;
+	background-color: rgba(251, 231, 193, 0.9);
+
+	@media (orientation: portrait) {
+		display: flex;
+	}
 }
 
 .info-dialog {
@@ -129,22 +220,23 @@ button {
 		display: flex;
 		align-items: center;
 		gap: 24px;
-		width: 700px;
+		width: min(700px, 90vw);
 		padding: 16px 32px;
 		background-color: #fbe7c1;
 		border: 4px solid #8b4513;
 		border-radius: 16px;
 		color: #5a2d0c;
-		font-size: 22px;
+		font-size: min(22px, 2.6vw);
 
 		.controls-img {
-			height: 380px;
+			height: min(380px, 70dvh);
 		}
 
 		.close-button {
 			position: absolute;
 			top: -24px;
 			right: -24px;
+			width: min(64px, 9vw);
 		}
 	}
 }

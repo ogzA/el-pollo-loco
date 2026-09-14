@@ -61,9 +61,47 @@ function updateMuteButton() {
 	}
 }
 
+function toggleFullscreen() {
+	if (document.fullscreenElement) {
+		document.exitFullscreen();
+	} else {
+		document.documentElement.requestFullscreen();
+	}
+}
+
 function initPage() {
 	addButtonEvents();
+	addMobileButtonEvents();
+	addFullscreenEvents();
 	updateMuteButton();
+}
+
+function addFullscreenEvents() {
+	const fullscreenButton = document.getElementById("fullscreen-button");
+	if (!document.fullscreenEnabled) {
+		fullscreenButton.classList.add("d-none");
+	}
+	fullscreenButton.addEventListener("click", toggleFullscreen);
+}
+
+function addMobileButtonEvents() {
+	addTouchEvents("left-button", "LEFT");
+	addTouchEvents("right-button", "RIGHT");
+	addTouchEvents("jump-button", "UP");
+	addTouchEvents("throw-button", "D");
+}
+
+function addTouchEvents(id, key) {
+	const button = document.getElementById(id);
+	button.addEventListener("touchstart", (e) => {
+		e.preventDefault();
+		keyboard[key] = true;
+	});
+	button.addEventListener("touchend", (e) => {
+		e.preventDefault();
+		keyboard[key] = false;
+	});
+	button.addEventListener("contextmenu", (e) => e.preventDefault());
 }
 
 function addButtonEvents() {

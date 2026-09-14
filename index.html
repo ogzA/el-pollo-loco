@@ -19,6 +19,25 @@
 		<div class="game-container">
 			<canvas id="canvas" width="1024" height="480"></canvas>
 
+			<div class="mobile-buttons">
+				<div>
+					<button id="left-button">
+						<img src="./assets/img/game-assets/left.png" alt="Move left" />
+					</button>
+					<button id="right-button">
+						<img src="./assets/img/game-assets/right.png" alt="Move right" />
+					</button>
+				</div>
+				<div>
+					<button id="jump-button">
+						<img src="./assets/img/game-assets/jump.png" alt="Jump" />
+					</button>
+					<button id="throw-button">
+						<img src="./assets/img/game-assets/throw.png" alt="Throw bottle" />
+					</button>
+				</div>
+			</div>
+
 			<div id="start-screen" class="start-screen">
 				<button id="play-button" class="play-button">
 					<img src="./assets/img/game-assets/play.png" alt="Play" />
@@ -53,6 +72,10 @@
 				/>
 			</button>
 
+			<button id="fullscreen-button" class="icon-button fullscreen-button">
+				<img src="./assets/img/game-assets/fullscreen.png" alt="Fullscreen" />
+			</button>
+
 			<dialog id="info-dialog" class="info-dialog">
 				<div id="info-content" class="info-content">
 					<button id="close-info-button" class="icon-button close-button">
@@ -75,6 +98,10 @@
 					</div>
 				</div>
 			</dialog>
+		</div>
+
+		<div class="rotate-device">
+			<p>Please rotate your phone to landscape to play</p>
 		</div>
 	</body>
 </html>
