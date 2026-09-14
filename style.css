@@ -21,6 +21,99 @@ body {
 	height: 100%;
 }
 
+h1 {
+	text-align: center;
+	font-size: 48px;
+	color: #8b2500;
+}
+
 canvas {
 	background-color: black;
+}
+
+.d-none {
+	display: none !important;
+}
+
+button {
+	cursor: pointer;
+	background: none;
+	border: none;
+
+	&:hover img {
+		transform: scale(1.05);
+	}
+}
+
+.icon-button {
+	img {
+		width: 64px;
+	}
+}
+
+.game-container {
+	position: relative;
+	width: 1024px;
+	height: 480px;
+}
+
+.start-screen {
+	position: absolute;
+	inset: 0;
+	background-image: url(./assets/img/9_intro_outro_screens/start/startscreen_1.png);
+	background-size: cover;
+	background-position: center;
+
+	.play-button {
+		position: absolute;
+		top: 10px;
+		left: 50%;
+		transform: translateX(-50%);
+
+		img {
+			width: 260px;
+		}
+	}
+
+	.info-button {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+}
+
+.info-dialog {
+	margin: auto;
+	padding: 0;
+	border: none;
+	background: none;
+	overflow: visible;
+
+	&::backdrop {
+		background-color: rgba(0, 0, 0, 0.6);
+	}
+
+	.info-content {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		width: 700px;
+		padding: 16px 32px;
+		background-color: #fbe7c1;
+		border: 4px solid #8b4513;
+		border-radius: 16px;
+		color: #5a2d0c;
+		font-size: 22px;
+
+		.controls-img {
+			height: 380px;
+		}
+
+		.close-button {
+			position: absolute;
+			top: -24px;
+			right: -24px;
+		}
+	}
 }

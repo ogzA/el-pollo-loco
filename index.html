@@ -4,6 +4,11 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>El Pollo Loco</title>
+		<link
+			rel="icon"
+			type="image/png"
+			href="./assets/img/7_statusbars/3_icons/icon_salsa_bottle.png"
+		/>
 		<link rel="stylesheet" href="./style.css" />
 
 		<script type="module" src="./js/game.js"></script>
@@ -11,6 +16,40 @@
 	<body>
 		<h1>El Pollo Loco</h1>
 
-		<canvas id="canvas" width="1024" height="480"></canvas>
+		<div class="game-container">
+			<canvas id="canvas" width="1024" height="480"></canvas>
+
+			<div id="start-screen" class="start-screen">
+				<button id="play-button" class="play-button">
+					<img src="./assets/img/game-assets/play.png" alt="Play" />
+				</button>
+				<button id="info-button" class="icon-button info-button">
+					<img src="./assets/img/game-assets/info.png" alt="Info" />
+				</button>
+			</div>
+
+			<dialog id="info-dialog" class="info-dialog">
+				<div id="info-content" class="info-content">
+					<button id="close-info-button" class="icon-button close-button">
+						<img src="./assets/img/game-assets/close.png" alt="Close" />
+					</button>
+					<img
+						class="controls-img"
+						src="./assets/img/game-assets/controls.png"
+						alt="Controls"
+					/>
+					<div>
+						<h2>How to play</h2>
+						<p>Arrow keys: move and jump</p>
+						<p>D: throw a bottle</p>
+						<h2>Story</h2>
+						<p>
+							Crazy chickens are everywhere! Help Pepe collect coins and salsa
+							bottles and defeat the giant hen at the end.
+						</p>
+					</div>
+				</div>
+			</dialog>
+		</div>
 	</body>
 </html>
