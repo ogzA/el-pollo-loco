@@ -7,6 +7,8 @@ export class Character extends MovableObject {
 	IMAGES_JUMPING = ImageHub.PEPE.jump;
 	IMAGES_DEAD = ImageHub.PEPE.dead;
 	IMAGES_HURT = ImageHub.PEPE.hurt;
+	IMAGES_IDLE = ImageHub.PEPE.idle;
+	IMAGES_LONG_IDLE = ImageHub.PEPE.long_idle;
 
 	world;
 	y = -100;
@@ -21,6 +23,9 @@ export class Character extends MovableObject {
 		left: 20,
 	};
 	lastThrow = 0;
+	lastJump = 0;
+	lastMove = new Date().getTime();
+	deadImage = 0;
 	MAX_BOTTLES = 8;
 
 	constructor() {
@@ -31,16 +36,19 @@ export class Character extends MovableObject {
 		this.loadImages(this.IMAGES_JUMPING);
 		this.loadImages(this.IMAGES_HURT);
 		this.loadImages(this.IMAGES_DEAD);
+		this.loadImages(this.IMAGES_IDLE);
+		this.loadImages(this.IMAGES_LONG_IDLE);
 
 		this.applyGravity();
-
 		this.animate();
+		this.animateIdle();
 		this.canThrow();
 	}
 
 	animate() {
 		IntervalHub.startInterval(() => {
 			if (this.isDead()) return;
+			this.updateLastMove();
 
 			if (
 				this.world.keyboard.RIGHT &&
@@ -64,15 +72,70 @@ export class Character extends MovableObject {
 
 		IntervalHub.startInterval(() => {
 			if (this.isDead()) {
-				this.playAnimation(this.IMAGES_DEAD);
+				this.playDeadAnimation();
 			} else if (this.isHurt()) {
 				this.playAnimation(this.IMAGES_HURT);
 			} else if (this.isAboveGround()) {
-				this.playAnimation(this.IMAGES_JUMPING);
+				this.playJumpAnimation();
 			} else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
 				this.playAnimation(this.IMAGES_WALKING);
 			}
 		}, 50);
+	}
+
+	animateIdle() {
+		IntervalHub.startInterval(() => {
+			if (!this.isIdle()) return;
+			if (this.isSleeping()) {
+				this.playAnimation(this.IMAGES_LONG_IDLE);
+			} else {
+				this.playAnimation(this.IMAGES_IDLE);
+			}
+		}, 200);
+	}
+
+	isIdle() {
+		const keyboard = this.world.keyboard;
+		return (
+			!this.isDead() &&
+			!this.isHurt() &&
+			!this.isAboveGround() &&
+			!keyboard.RIGHT &&
+			!keyboard.LEFT
+		);
+	}
+
+	isSleeping() {
+		const timepassed = (new Date().getTime() - this.lastMove) / 1000;
+		return timepassed > 10;
+	}
+
+	updateLastMove() {
+		const keyboard = this.world.keyboard;
+		if (keyboard.RIGHT || keyboard.LEFT || keyboard.UP || keyboard.D) {
+			this.lastMove = new Date().getTime();
+		}
+	}
+
+	jump() {
+		super.jump();
+		this.lastJump = new Date().getTime();
+	}
+
+	playJumpAnimation() {
+		const timepassed = new Date().getTime() - this.lastJump;
+		let i = Math.floor(timepassed / 110);
+		if (i >= this.IMAGES_JUMPING.length) {
+			i = this.IMAGES_JUMPING.length - 1;
+		}
+		this.img = this.imageCache[this.IMAGES_JUMPING[i]];
+	}
+
+	playDeadAnimation() {
+		if (this.deadImage < this.IMAGES_DEAD.length) {
+			this.img = this.imageCache[this.IMAGES_DEAD[this.deadImage]];
+			this.deadImage++;
+		}
 	}
 
 	canThrow() {
