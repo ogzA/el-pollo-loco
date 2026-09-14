@@ -5,6 +5,11 @@ export class BackgroundObject extends MovableObject {
 	width = 1024;
 	height = 480;
 
+	/**
+	 * Creates a background image at the bottom of the canvas.
+	 * @param {string} imagePath - path to the image
+	 * @param {number} x - x position of the image
+	 */
 	constructor(imagePath, x) {
 		super().loadImage(imagePath);
 		this.x = x;

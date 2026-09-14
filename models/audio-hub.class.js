@@ -4,6 +4,10 @@ class MyAudio {
 	file;
 	isLoaded;
 
+	/**
+	 * Creates an audio object with a lower volume.
+	 * @param {string} _file - path to the audio file
+	 */
 	constructor(_file) {
 		this.file = new Audio(_file);
 		this.file.volume = 0.3;
@@ -70,7 +74,10 @@ export class AudioHub {
 	// Am Anfang stumm, der Nutzer kann den Ton selbst einschalten (Local Storage)
 	static isMuted = localStorage.getItem("isMuted") !== "false";
 
-	// Spielt eine einzelne Audiodatei ab
+	/**
+	 * Plays a single audio file (not when the sound is muted).
+	 * @param {MyAudio} sound - sound from the AudioHub
+	 */
 	static playOne(sound) {
 		if (AudioHub.isMuted) return;
 		sound.file.currentTime = 0;
@@ -82,14 +89,19 @@ export class AudioHub {
 		}
 	}
 
-	// Stoppt das Abspielen aller Audiodateien
+	/**
+	 * Stops playing all audio files.
+	 */
 	static stopAll() {
 		AudioHub.allSounds.forEach((sound) => {
 			sound.file.pause();
 		});
 	}
 
-	// Stoppt das Abspielen einer einzelnen Audiodatei
+	/**
+	 * Stops playing a single audio file.
+	 * @param {MyAudio} sound - sound from the AudioHub
+	 */
 	static stopOne(sound) {
 		sound.file.pause();
 	}

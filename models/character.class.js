@@ -28,6 +28,9 @@ export class Character extends MovableObject {
 	deadImage = 0;
 	MAX_BOTTLES = 8;
 
+	/**
+	 * Loads all images of the character and starts gravity and animations.
+	 */
 	constructor() {
 		super();
 		this.loadImage(this.IMAGES_WALKING[0]);
@@ -44,11 +47,17 @@ export class Character extends MovableObject {
 		this.animateIdle();
 	}
 
+	/**
+	 * Starts the intervals for movement and animation.
+	 */
 	animate() {
 		IntervalHub.startInterval(() => this.moveCharacter(), 1000 / 30);
 		IntervalHub.startInterval(() => this.playCharacterAnimation(), 50);
 	}
 
+	/**
+	 * Moves the character with the keyboard and sets the camera. After death the character does not move anymore.
+	 */
 	moveCharacter() {
 		this.playLoopSound(AudioHub.CHARACTER_RUN, this.isWalking());
 		if (this.isDead()) return;
@@ -57,6 +66,9 @@ export class Character extends MovableObject {
 		this.world.cameraX = -this.x + 100;
 	}
 
+	/**
+	 * Walks right or left and jumps, depending on the pressed key.
+	 */
 	moveWithKeyboard() {
 		const keyboard = this.world.keyboard;
 		if (keyboard.RIGHT && this.x < this.world.level.levelEndX) {
@@ -72,6 +84,9 @@ export class Character extends MovableObject {
 		}
 	}
 
+	/**
+	 * Plays the matching animation: dead, hurt, jumping or walking.
+	 */
 	playCharacterAnimation() {
 		if (this.isDead()) {
 			this.playDeadAnimation();
@@ -84,6 +99,9 @@ export class Character extends MovableObject {
 		}
 	}
 
+	/**
+	 * Starts the interval for the idle and sleep animation (with snoring).
+	 */
 	animateIdle() {
 		IntervalHub.startInterval(() => {
 			const isSnoring = this.isIdle() && this.isSleeping();
@@ -97,6 +115,10 @@ export class Character extends MovableObject {
 		}, 200);
 	}
 
+	/**
+	 * Checks if the character is doing nothing right now.
+	 * @returns {boolean} true if no other animation is running
+	 */
 	isIdle() {
 		const keyboard = this.world.keyboard;
 		return (
@@ -108,11 +130,18 @@ export class Character extends MovableObject {
 		);
 	}
 
+	/**
+	 * Checks if no key was pressed for more than 10 seconds.
+	 * @returns {boolean} true if the character is sleeping
+	 */
 	isSleeping() {
 		const timepassed = (new Date().getTime() - this.lastMove) / 1000;
 		return timepassed > 10;
 	}
 
+	/**
+	 * Saves the time of the last movement when a key is pressed.
+	 */
 	updateLastMove() {
 		const keyboard = this.world.keyboard;
 		if (keyboard.RIGHT || keyboard.LEFT || keyboard.UP || keyboard.D) {
@@ -120,6 +149,10 @@ export class Character extends MovableObject {
 		}
 	}
 
+	/**
+	 * Checks if the character is walking on the ground.
+	 * @returns {boolean} true if left or right is pressed and the character is on the ground and alive
+	 */
 	isWalking() {
 		const keyboard = this.world.keyboard;
 		return (
@@ -129,6 +162,11 @@ export class Character extends MovableObject {
 		);
 	}
 
+	/**
+	 * Plays a sound as long as it is needed and stops it otherwise.
+	 * @param {MyAudio} sound - sound from the AudioHub
+	 * @param {boolean} shouldPlay - true if the sound should play
+	 */
 	playLoopSound(sound, shouldPlay) {
 		if (!shouldPlay) {
 			AudioHub.stopOne(sound);
@@ -137,12 +175,19 @@ export class Character extends MovableObject {
 		}
 	}
 
+	/**
+	 * Lets the character jump, saves the time for the jump animation and plays the sound.
+	 */
 	jump() {
 		super.jump();
 		this.lastJump = new Date().getTime();
 		AudioHub.playOne(AudioHub.CHARACTER_JUMP);
 	}
 
+	/**
+	 * Removes energy and plays the damage or death sound. After death nothing happens anymore.
+	 * @param {number} damage - damage from the enemy
+	 */
 	hit(damage) {
 		if (this.isDead()) return;
 		super.hit(damage);
@@ -153,6 +198,9 @@ export class Character extends MovableObject {
 		}
 	}
 
+	/**
+	 * Shows the jump image that matches the time since the jump, so the animation plays only once.
+	 */
 	playJumpAnimation() {
 		const timepassed = new Date().getTime() - this.lastJump;
 		let i = Math.floor(timepassed / 110);
@@ -162,6 +210,9 @@ export class Character extends MovableObject {
 		this.img = this.imageCache[this.IMAGES_JUMPING[i]];
 	}
 
+	/**
+	 * Plays the death animation once and stays on the last image.
+	 */
 	playDeadAnimation() {
 		if (this.deadImage < this.IMAGES_DEAD.length) {
 			this.img = this.imageCache[this.IMAGES_DEAD[this.deadImage]];
@@ -169,11 +220,19 @@ export class Character extends MovableObject {
 		}
 	}
 
+	/**
+	 * Checks if the character is allowed to throw a bottle again.
+	 * @returns {boolean} true if the last throw was more than 0.8 seconds ago and the character is alive
+	 */
 	canThrow() {
 		const timepassed = (new Date().getTime() - this.lastThrow) / 1000;
 		return timepassed > 0.8 && !this.isDead();
 	}
 
+	/**
+	 * Checks if there is still space for a bottle.
+	 * @returns {boolean} true if fewer than MAX_BOTTLES bottles are collected
+	 */
 	canCollectBottle() {
 		return this.bottles < this.MAX_BOTTLES;
 	}

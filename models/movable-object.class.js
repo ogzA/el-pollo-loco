@@ -11,6 +11,9 @@ export class MovableObject extends DrawableObject {
 	coins = 0;
 	lastHit = 0;
 
+	/**
+	 * Starts the gravity. On the ground speedY is set to 0.
+	 */
 	applyGravity() {
 		IntervalHub.startInterval(() => {
 			if (this.isAboveGround() || this.speedY > 0) {
@@ -23,6 +26,10 @@ export class MovableObject extends DrawableObject {
 		}, 1000 / 25);
 	}
 
+	/**
+	 * Checks if the object is in the air. Bottles always fall.
+	 * @returns {boolean} true if the object is above the ground
+	 */
 	isAboveGround() {
 		if (this.alwaysFalls) {
 			// Throwable Objects should always fall
@@ -32,6 +39,11 @@ export class MovableObject extends DrawableObject {
 		}
 	}
 
+	/**
+	 * Checks if this object overlaps with another object.
+	 * @param {MovableObject} mo - other object
+	 * @returns {boolean} true on a collision
+	 */
 	isColliding(mo) {
 		// In draw() ist x beim Spiegeln negativ, deshalb hier frisch berechnen
 		this.getRealFrame();
@@ -44,10 +56,19 @@ export class MovableObject extends DrawableObject {
 		);
 	}
 
+	/**
+	 * Checks if the object falls on another object from above.
+	 * @param {MovableObject} mo - other object
+	 * @returns {boolean} true if it collides while falling
+	 */
 	isCollidingFromTop(mo) {
 		return this.isColliding(mo) && this.speedY < 0;
 	}
 
+	/**
+	 * Removes energy and saves the time of the hit.
+	 * @param {number} [damage=2] - damage
+	 */
 	hit(damage = 2) {
 		this.energy -= damage;
 		if (this.energy < 0) {
@@ -57,16 +78,28 @@ export class MovableObject extends DrawableObject {
 		}
 	}
 
+	/**
+	 * Checks if the last hit was less than 1 second ago.
+	 * @returns {boolean} true if the object is hurt right now
+	 */
 	isHurt() {
 		let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
 		timepassed = timepassed / 1000;
 		return timepassed < 1;
 	}
 
+	/**
+	 * Checks if there is no energy left.
+	 * @returns {boolean} true if energy is 0
+	 */
 	isDead() {
 		return this.energy == 0;
 	}
 
+	/**
+	 * Shows the next image of an image list.
+	 * @param {Array<string>} images - image paths of the animation
+	 */
 	playAnimation(images) {
 		const i = this.currentImage % images.length;
 		const path = images[i];
@@ -74,14 +107,23 @@ export class MovableObject extends DrawableObject {
 		this.currentImage++;
 	}
 
+	/**
+	 * Moves the object to the right.
+	 */
 	moveRight() {
 		this.x += this.speed;
 	}
 
+	/**
+	 * Moves the object to the left.
+	 */
 	moveLeft() {
 		this.x -= this.speed;
 	}
 
+	/**
+	 * Lets the object jump up.
+	 */
 	jump() {
 		this.speedY = 30;
 	}

@@ -11,6 +11,12 @@ export class ThrowableObject extends MovableObject {
 	FLYING_BOTTLES = ImageHub.BOTTLES.flying;
 	SPLASH_BOTTLES = ImageHub.BOTTLES.splash;
 
+	/**
+	 * Creates a thrown bottle and starts the throw and the animation.
+	 * @param {number} _x - start x position
+	 * @param {number} _y - start y position
+	 * @param {boolean} _otherDirection - true if the bottle is thrown to the left
+	 */
 	constructor(_x, _y, _otherDirection) {
 		super();
 		this.loadImage(ImageHub.BOTTLES.straight[0]);
@@ -26,6 +32,9 @@ export class ThrowableObject extends MovableObject {
 		this.animate();
 	}
 
+	/**
+	 * Throws the bottle up and to the right or left.
+	 */
 	throw() {
 		this.speedY = 30;
 		this.applyGravity();
@@ -39,6 +48,9 @@ export class ThrowableObject extends MovableObject {
 		}, 25);
 	}
 
+	/**
+	 * Plays the flying or splash animation.
+	 */
 	animate() {
 		IntervalHub.startInterval(() => {
 			if (this.isBroken) {
@@ -49,6 +61,9 @@ export class ThrowableObject extends MovableObject {
 		}, 50);
 	}
 
+	/**
+	 * Breaks the bottle: splash animation, stop moving and play the sound.
+	 */
 	breakBottle() {
 		this.isBroken = true;
 		this.brokenTime = new Date().getTime();
@@ -58,6 +73,10 @@ export class ThrowableObject extends MovableObject {
 		AudioHub.playOne(AudioHub.BOTTLE_BREAK);
 	}
 
+	/**
+	 * Checks if the splash animation is finished.
+	 * @returns {boolean} true if the bottle is broken and 0.3 seconds have passed
+	 */
 	isSplashOver() {
 		const timepassed = (new Date().getTime() - this.brokenTime) / 1000;
 		return this.isBroken && timepassed > 0.3;

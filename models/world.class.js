@@ -25,6 +25,11 @@ export class World {
 	gameOver = false;
 	animationFrame;
 
+	/**
+	 * Creates the game world and starts drawing and the game logic.
+	 * @param {HTMLCanvasElement} _canvas - canvas of the game
+	 * @param {Keyboard} _keyboard - keyboard object
+	 */
 	constructor(_canvas, _keyboard) {
 		this.ctx = _canvas.getContext("2d");
 		this.canvas = _canvas;
@@ -34,10 +39,16 @@ export class World {
 		this.run();
 	}
 
+	/**
+	 * Gives the character a reference to the world.
+	 */
 	setWorld() {
 		this.character.world = this;
 	}
 
+	/**
+	 * Starts the interval that runs all checks of the game.
+	 */
 	run() {
 		IntervalHub.startInterval(() => {
 			this.checkCollisions();
@@ -51,6 +62,9 @@ export class World {
 		}, 50);
 	}
 
+	/**
+	 * Checks if the character collects coins or bottles.
+	 */
 	checkCollectableCollisions() {
 		for (let i = this.level.collectables.length - 1; i >= 0; i--) {
 			const item = this.level.collectables[i];
@@ -64,6 +78,10 @@ export class World {
 		}
 	}
 
+	/**
+	 * Collects a coin and updates the coin status bar.
+	 * @param {number} i - index in the collectables array
+	 */
 	collectCoin(i) {
 		this.character.coins++;
 		this.level.collectables.splice(i, 1);
@@ -71,6 +89,10 @@ export class World {
 		AudioHub.playOne(AudioHub.COIN_COLLECT);
 	}
 
+	/**
+	 * Collects a bottle and updates the bottle status bar.
+	 * @param {number} i - index in the collectables array
+	 */
 	collectBottle(i) {
 		this.character.bottles++;
 		this.level.collectables.splice(i, 1);
@@ -78,14 +100,25 @@ export class World {
 		AudioHub.playOne(AudioHub.BOTTLE_COLLECT);
 	}
 
+	/**
+	 * Converts the bottles into a percentage.
+	 * @returns {number} percentage for the status bar
+	 */
 	getBottlePercentage() {
 		return (this.character.bottles / this.character.MAX_BOTTLES) * 100;
 	}
 
+	/**
+	 * Converts the coins into a percentage.
+	 * @returns {number} percentage for the status bar
+	 */
 	getCoinPercentage() {
 		return (this.character.coins / this.MAX_COINS) * 100;
 	}
 
+	/**
+	 * Throws a bottle when D is pressed, bottles are available and the character is allowed to throw.
+	 */
 	checkThrowObjects() {
 		if (
 			this.keyboard.D &&
@@ -96,6 +129,9 @@ export class World {
 		}
 	}
 
+	/**
+	 * Creates a new bottle in front of the character and updates the status bar.
+	 */
 	throwBottle() {
 		const bottle = new ThrowableObject(
 			this.character.x + 100,
@@ -109,6 +145,9 @@ export class World {
 		this.bottleBar.setPercentage(this.getBottlePercentage());
 	}
 
+	/**
+	 * Checks collisions with enemies: from above the enemy dies, otherwise the character gets damage.
+	 */
 	checkCollisions() {
 		let stomped = false;
 		this.level.enemies.forEach((enemy) => {
@@ -126,10 +165,18 @@ export class World {
 		if (stomped) this.character.jump();
 	}
 
+	/**
+	 * Checks if an enemy can hurt the character.
+	 * @param {MovableObject} enemy - enemy
+	 * @returns {boolean} true on a collision when the character is not hurt right now
+	 */
 	canHurtCharacter(enemy) {
 		return this.character.isColliding(enemy) && !this.character.isHurt();
 	}
 
+	/**
+	 * Checks if a bottle hits the endboss.
+	 */
 	checkBottleCollisions() {
 		const boss = this.getEndboss();
 
@@ -143,6 +190,11 @@ export class World {
 		});
 	}
 
+	/**
+	 * The bottle breaks and the endboss gets damage. If the endboss is dead, the game is won.
+	 * @param {ThrowableObject} bottle - thrown bottle
+	 * @param {Endboss} boss - endboss
+	 */
 	hitEndboss(bottle, boss) {
 		bottle.breakBottle();
 		boss.hit();
@@ -152,6 +204,9 @@ export class World {
 		}
 	}
 
+	/**
+	 * Checks if a bottle hits a chicken. The chicken dies.
+	 */
 	checkBottleChickenCollisions() {
 		this.throwableObjects.forEach((bottle) => {
 			this.level.enemies.forEach((enemy) => {
@@ -164,6 +219,9 @@ export class World {
 		});
 	}
 
+	/**
+	 * Removes bottles after the splash animation or when they fell out of the screen.
+	 */
 	removeBottles() {
 		for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
 			const bottle = this.throwableObjects[i];
@@ -173,6 +231,9 @@ export class World {
 		}
 	}
 
+	/**
+	 * Starts the alert of the endboss when the character is close enough.
+	 */
 	checkEndbossAlert() {
 		const boss = this.getEndboss();
 		if (!boss || boss.isAlerted) return;
@@ -181,12 +242,19 @@ export class World {
 		}
 	}
 
+	/**
+	 * Ends the game as lost when the character is dead.
+	 */
 	checkCharacterDead() {
 		if (this.character.isDead()) {
 			this.endGame(false);
 		}
 	}
 
+	/**
+	 * Ends the game only once: after 1.5 seconds intervals, sounds and drawing stop and the end screen appears.
+	 * @param {boolean} isWon - true if the game is won
+	 */
 	endGame(isWon) {
 		if (this.gameOver) return;
 		this.gameOver = true;
@@ -198,6 +266,10 @@ export class World {
 		}, 1500);
 	}
 
+	/**
+	 * Shows the end screen with the win or game over image.
+	 * @param {boolean} isWon - true if the game is won
+	 */
 	showEndScreen(isWon) {
 		const endImage = document.getElementById("end-image");
 		if (isWon) {
@@ -210,11 +282,18 @@ export class World {
 		document.getElementById("end-screen").classList.remove("d-none");
 	}
 
+	/**
+	 * Finds the endboss in the list of enemies.
+	 * @returns {Endboss} the endboss
+	 */
 	getEndboss() {
 		return this.level.enemies.find((enemy) => enemy.isEndboss);
 	}
 
-	// Reihenfolge ist hier wichtig! Hinweis: Überlappung der Elemente
+	/**
+	 * Draws all objects and calls itself again with requestAnimationFrame.
+	 * The order is important here! Note: the elements overlap.
+	 */
 	draw() {
 		this.clearCanvas(this.canvas);
 		this.ctx.translate(this.cameraX, 0);
@@ -232,6 +311,9 @@ export class World {
 	}
 
 	// -------------- Space for fixed objects ------------
+	/**
+	 * Draws the status bars that do not move with the camera.
+	 */
 	drawFixedObjects() {
 		this.addToMap(this.healthBar);
 		this.addToMap(this.coinBar);
@@ -239,6 +321,9 @@ export class World {
 		this.addToMap(this.endbossBar);
 	}
 
+	/**
+	 * Draws enemies, bottles, collectables and the character.
+	 */
 	drawMovableObjects() {
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.throwableObjects);
@@ -246,12 +331,20 @@ export class World {
 		this.addToMap(this.character);
 	}
 
+	/**
+	 * Draws all objects of a list.
+	 * @param {Array<DrawableObject>} objects - objects to draw
+	 */
 	addObjectsToMap(objects) {
 		objects.forEach((o) => {
 			this.addToMap(o);
 		});
 	}
 
+	/**
+	 * Draws an object and mirrors it when it looks to the left.
+	 * @param {DrawableObject} mo - object to draw
+	 */
 	addToMap(mo) {
 		if (mo.otherDirection) {
 			this.flipImage(mo);
@@ -264,6 +357,10 @@ export class World {
 		}
 	}
 
+	/**
+	 * Mirrors the image for objects that look to the left.
+	 * @param {DrawableObject} mo - object to mirror
+	 */
 	flipImage(mo) {
 		this.ctx.save();
 		this.ctx.translate(mo.width, 0);
@@ -271,11 +368,19 @@ export class World {
 		mo.x = mo.x * -1;
 	}
 
+	/**
+	 * Undoes the mirroring again.
+	 * @param {DrawableObject} mo - mirrored object
+	 */
 	flipImageBack(mo) {
 		mo.x = mo.x * -1;
 		this.ctx.restore();
 	}
 
+	/**
+	 * Clears the whole canvas before the next frame.
+	 * @param {HTMLCanvasElement} canvas - canvas of the game
+	 */
 	clearCanvas(canvas) {
 		this.ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}

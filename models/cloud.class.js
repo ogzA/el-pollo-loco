@@ -6,6 +6,9 @@ export class Cloud extends MovableObject {
 	y = 50;
 	width = 512;
 	height = 300;
+	/**
+	 * Creates a cloud at a random x position.
+	 */
 	constructor() {
 		super().loadImage(ImageHub.CLOUD.move[0]);
 
@@ -14,6 +17,9 @@ export class Cloud extends MovableObject {
 		this.animate();
 	}
 
+	/**
+	 * Lets the cloud move slowly to the left.
+	 */
 	animate() {
 		IntervalHub.startInterval(() => {
 			this.moveLeft();

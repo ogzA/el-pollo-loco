@@ -2,6 +2,9 @@ import { CollectableObject } from "./collectable-object.class.js";
 
 export class BottleObject extends CollectableObject {
 	isBottle = true;
+	/**
+	 * Creates a bottle on the ground at a random x position.
+	 */
 	constructor() {
 		super();
 		this.y = 350;

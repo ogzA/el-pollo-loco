@@ -3,6 +3,9 @@ import { CollectableObject } from "./collectable-object.class.js";
 export class CoinObject extends CollectableObject {
 	isCoin = true;
 
+	/**
+	 * Creates a coin at a random position that can be reached with a jump.
+	 */
 	constructor() {
 		super();
 		this.width = 100;

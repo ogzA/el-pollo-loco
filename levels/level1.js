@@ -9,6 +9,9 @@ import { CoinObject } from "../models/coin-object.class.js";
 
 export let level1;
 
+/**
+ * Creates level1 with new enemies and collectables (on start and restart).
+ */
 export function initLevel() {
 	level1 = new Level(
 		createEnemies(),
@@ -18,6 +21,10 @@ export function initLevel() {
 	);
 }
 
+/**
+ * Creates all enemies: 7 chickens, 7 small chickens and the endboss.
+ * @returns {Array<MovableObject>} list with all enemies
+ */
 function createEnemies() {
 	const enemies = [];
 	for (let i = 0; i < 7; i++) {
@@ -30,6 +37,10 @@ function createEnemies() {
 	return enemies;
 }
 
+/**
+ * Creates 12 bottles and 20 coins to collect.
+ * @returns {Array<CollectableObject>} list with all collectables
+ */
 function createCollectables() {
 	const collectables = [];
 	for (let i = 0; i < 12; i++) {

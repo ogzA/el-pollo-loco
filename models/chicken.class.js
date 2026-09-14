@@ -14,6 +14,10 @@ export class Chicken extends MovableObject {
 		left: 2,
 	};
 
+	/**
+	 * Creates a chicken. The position depends on the index, with some randomness.
+	 * @param {number} _index - number of the chicken in the level
+	 */
 	constructor(_index) {
 		super();
 		this.loadImage(this.IMAGES_WALKING[0]);
@@ -28,11 +32,17 @@ export class Chicken extends MovableObject {
 		this.animate();
 	}
 
+	/**
+	 * Kills the chicken and plays the sound.
+	 */
 	die() {
 		this.energy = 0;
 		AudioHub.playOne(AudioHub.CHICKEN_DEAD);
 	}
 
+	/**
+	 * Lets the chicken walk left and plays the walking or death animation.
+	 */
 	animate() {
 		IntervalHub.startInterval(() => {
 			if (!this.isDead()) {
