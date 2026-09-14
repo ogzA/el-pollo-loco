@@ -1,3 +1,4 @@
+import { AudioHub } from "./AudioHub.class.js";
 import { ImageHub } from "./image-hub.class.js";
 import { IntervalHub } from "./intervalhub.class.js";
 import { MovableObject } from "./movable-object.class.js";
@@ -37,12 +38,14 @@ export class FinalBoss extends MovableObject {
 	hit() {
 		super.hit(20);
 		this.currentImage = 0;
+		AudioHub.playOne(AudioHub.ENDBOSS_HURT);
 	}
 
 	startAlert() {
 		this.isAlerted = true;
 		this.currentImage = 0;
 		this.alertStarted = new Date().getTime();
+		AudioHub.playOne(AudioHub.ENDBOSS_APPROACH);
 	}
 
 	isAlertRunning() {

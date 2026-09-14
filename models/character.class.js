@@ -1,3 +1,4 @@
+import { AudioHub } from "./AudioHub.class.js";
 import { ImageHub } from "./image-hub.class.js";
 import { IntervalHub } from "./intervalhub.class.js";
 import { MovableObject } from "./movable-object.class.js";
@@ -47,6 +48,7 @@ export class Character extends MovableObject {
 
 	animate() {
 		IntervalHub.startInterval(() => {
+			this.playLoopSound(AudioHub.CHARACTER_RUN, this.isWalking());
 			if (this.isDead()) return;
 			this.updateLastMove();
 
@@ -85,6 +87,8 @@ export class Character extends MovableObject {
 
 	animateIdle() {
 		IntervalHub.startInterval(() => {
+			const isSnoring = this.isIdle() && this.isSleeping();
+			this.playLoopSound(AudioHub.CHARACTER_SNORING, isSnoring);
 			if (!this.isIdle()) return;
 			if (this.isSleeping()) {
 				this.playAnimation(this.IMAGES_LONG_IDLE);
@@ -117,9 +121,37 @@ export class Character extends MovableObject {
 		}
 	}
 
+	isWalking() {
+		const keyboard = this.world.keyboard;
+		return (
+			(keyboard.RIGHT || keyboard.LEFT) &&
+			!this.isAboveGround() &&
+			!this.isDead()
+		);
+	}
+
+	playLoopSound(sound, shouldPlay) {
+		if (!shouldPlay) {
+			AudioHub.stopOne(sound);
+		} else if (sound.file.paused) {
+			AudioHub.playOne(sound);
+		}
+	}
+
 	jump() {
 		super.jump();
 		this.lastJump = new Date().getTime();
+		AudioHub.playOne(AudioHub.CHARACTER_JUMP);
+	}
+
+	hit() {
+		if (this.isDead()) return;
+		super.hit();
+		if (this.isDead()) {
+			AudioHub.playOne(AudioHub.CHARACTER_DEAD);
+		} else {
+			AudioHub.playOne(AudioHub.CHARACTER_DAMAGE);
+		}
 	}
 
 	playJumpAnimation() {

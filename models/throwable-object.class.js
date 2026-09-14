@@ -1,3 +1,4 @@
+import { AudioHub } from "./AudioHub.class.js";
 import { ImageHub } from "./image-hub.class.js";
 import { IntervalHub } from "./intervalhub.class.js";
 import { MovableObject } from "./movable-object.class.js";
@@ -54,6 +55,7 @@ export class ThrowableObject extends MovableObject {
 		this.currentImage = 0;
 		this.speedY = 0;
 		this.speed = 0;
+		AudioHub.playOne(AudioHub.BOTTLE_BREAK);
 	}
 
 	isSplashOver() {

@@ -1,3 +1,4 @@
+import { AudioHub } from "./AudioHub.class.js";
 import { ImageHub } from "./image-hub.class.js";
 import { IntervalHub } from "./intervalhub.class.js";
 import { MovableObject } from "./movable-object.class.js";
@@ -29,6 +30,7 @@ export class Chicken extends MovableObject {
 
 	die() {
 		this.energy = 0;
+		AudioHub.playOne(AudioHub.CHICKEN_DEAD);
 	}
 
 	animate() {

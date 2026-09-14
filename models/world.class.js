@@ -1,4 +1,5 @@
 import { level1 } from "../levels/level1.js";
+import { AudioHub } from "./AudioHub.class.js";
 import { BottleBar } from "./bottle-bar.class.js";
 import { Character } from "./character.class.js";
 import { CoinBar } from "./coin-bar.class.js";
@@ -59,10 +60,12 @@ export class World {
 				this.character.coins++;
 				this.level.collectables.splice(i, 1);
 				this.coinBar.setPercentage(this.getCoinPercentage());
+				AudioHub.playOne(AudioHub.COIN_COLLECT);
 			} else if (item.isBottle && this.character.canCollectBottle()) {
 				this.character.bottles++;
 				this.level.collectables.splice(i, 1);
 				this.bottleBar.setPercentage(this.getBottlePercentage());
+				AudioHub.playOne(AudioHub.BOTTLE_COLLECT);
 			}
 		}
 	}
@@ -172,6 +175,7 @@ export class World {
 		this.gameOver = true;
 		setTimeout(() => {
 			IntervalHub.stopAllIntervals();
+			AudioHub.stopAll();
 			cancelAnimationFrame(this.animationFrame);
 			this.showEndScreen(isWon);
 		}, 1500);
