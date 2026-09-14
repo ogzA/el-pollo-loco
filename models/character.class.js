@@ -47,42 +47,43 @@ export class Character extends MovableObject {
 	}
 
 	animate() {
-		IntervalHub.startInterval(() => {
-			this.playLoopSound(AudioHub.CHARACTER_RUN, this.isWalking());
-			if (this.isDead()) return;
-			this.updateLastMove();
+		IntervalHub.startInterval(() => this.moveCharacter(), 1000 / 30);
+		IntervalHub.startInterval(() => this.playCharacterAnimation(), 50);
+	}
 
-			if (
-				this.world.keyboard.RIGHT &&
-				this.x < this.world.level.level_end_x
-			) {
-				this.moveRight();
-				this.otherDirection = false;
-			}
+	moveCharacter() {
+		this.playLoopSound(AudioHub.CHARACTER_RUN, this.isWalking());
+		if (this.isDead()) return;
+		this.updateLastMove();
+		this.moveWithKeyboard();
+		this.world.camera_x = -this.x + 100;
+	}
 
-			if (this.world.keyboard.LEFT && this.x > 0) {
-				this.moveLeft();
-				this.otherDirection = true;
-			}
+	moveWithKeyboard() {
+		const keyboard = this.world.keyboard;
+		if (keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+			this.moveRight();
+			this.otherDirection = false;
+		}
+		if (keyboard.LEFT && this.x > 0) {
+			this.moveLeft();
+			this.otherDirection = true;
+		}
+		if (keyboard.UP && !this.isAboveGround()) {
+			this.jump();
+		}
+	}
 
-			if (this.world.keyboard.UP && !this.isAboveGround()) {
-				this.jump();
-			}
-
-			this.world.camera_x = -this.x + 100;
-		}, 1000 / 30);
-
-		IntervalHub.startInterval(() => {
-			if (this.isDead()) {
-				this.playDeadAnimation();
-			} else if (this.isHurt()) {
-				this.playAnimation(this.IMAGES_HURT);
-			} else if (this.isAboveGround()) {
-				this.playJumpAnimation();
-			} else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-				this.playAnimation(this.IMAGES_WALKING);
-			}
-		}, 50);
+	playCharacterAnimation() {
+		if (this.isDead()) {
+			this.playDeadAnimation();
+		} else if (this.isHurt()) {
+			this.playAnimation(this.IMAGES_HURT);
+		} else if (this.isAboveGround()) {
+			this.playJumpAnimation();
+		} else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+			this.playAnimation(this.IMAGES_WALKING);
+		}
 	}
 
 	animateIdle() {

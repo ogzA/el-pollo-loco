@@ -65,16 +65,18 @@ export class FinalBoss extends MovableObject {
 			}
 		}, 1000 / 60);
 
-		IntervalHub.startInterval(() => {
-			if (this.isDead()) {
-				this.playAnimation(this.IMAGES_DEAD);
-			} else if (this.isHurt()) {
-				this.playAnimation(this.IMAGES_HURT);
-			} else if (this.canWalk()) {
-				this.playAnimation(this.IMAGES_WALKING);
-			} else {
-				this.playAnimation(this.IMAGES_ALERT);
-			}
-		}, 100);
+		IntervalHub.startInterval(() => this.playBossAnimation(), 100);
+	}
+
+	playBossAnimation() {
+		if (this.isDead()) {
+			this.playAnimation(this.IMAGES_DEAD);
+		} else if (this.isHurt()) {
+			this.playAnimation(this.IMAGES_HURT);
+		} else if (this.canWalk()) {
+			this.playAnimation(this.IMAGES_WALKING);
+		} else {
+			this.playAnimation(this.IMAGES_ALERT);
+		}
 	}
 }

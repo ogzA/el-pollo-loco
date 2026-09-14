@@ -105,68 +105,37 @@ function addTouchEvents(id, key) {
 }
 
 function addButtonEvents() {
-	document.getElementById("play-button").addEventListener("click", startGame);
-	document.getElementById("info-button").addEventListener("click", openInfo);
-	document
-		.getElementById("restart-button")
-		.addEventListener("click", restartGame);
-	document.getElementById("home-button").addEventListener("click", goHome);
-	document
-		.getElementById("mute-button")
-		.addEventListener("click", toggleMute);
-	document
-		.getElementById("close-info-button")
-		.addEventListener("click", closeInfo);
-	document.getElementById("info-dialog").addEventListener("click", closeInfo);
-	document
-		.getElementById("info-content")
-		.addEventListener("click", (e) => e.stopPropagation());
+	addClickEvent("play-button", startGame);
+	addClickEvent("info-button", openInfo);
+	addClickEvent("restart-button", restartGame);
+	addClickEvent("home-button", goHome);
+	addClickEvent("mute-button", toggleMute);
+	addClickEvent("close-info-button", closeInfo);
+	addClickEvent("info-dialog", closeInfo);
+	addClickEvent("info-content", (e) => e.stopPropagation());
+}
+
+function addClickEvent(id, callback) {
+	document.getElementById(id).addEventListener("click", callback);
 }
 
 // keyCode ist deprecated. key property nutzen: https://www.w3schools.com/Jsref/event_key_key.asp
-document.addEventListener("keydown", (e) => {
+function setKey(e, isPressed) {
 	if (e.key === "ArrowRight") {
-		keyboard.RIGHT = true;
+		keyboard.RIGHT = isPressed;
+	} else if (e.key === "ArrowDown") {
+		keyboard.DOWN = isPressed;
+	} else if (e.key === "ArrowUp") {
+		keyboard.UP = isPressed;
+	} else if (e.key === "ArrowLeft") {
+		keyboard.LEFT = isPressed;
+	} else if (e.key === "d" || e.key === "D") {
+		keyboard.D = isPressed;
 	}
+}
 
-	if (e.key === "ArrowDown") {
-		keyboard.DOWN = true;
-	}
-
-	if (e.key === "ArrowUp") {
-		keyboard.UP = true;
-	}
-
-	if (e.key === "ArrowLeft") {
-		keyboard.LEFT = true;
-	}
-
-	if (e.key === "d" || e.key === "D") {
-		keyboard.D = true;
-	}
-});
-
-document.addEventListener("keyup", (e) => {
-	if (e.key === "ArrowRight") {
-		keyboard.RIGHT = false;
-	}
-
-	if (e.key === "ArrowDown") {
-		keyboard.DOWN = false;
-	}
-
-	if (e.key === "ArrowUp") {
-		keyboard.UP = false;
-	}
-
-	if (e.key === "ArrowLeft") {
-		keyboard.LEFT = false;
-	}
-
-	if (e.key === "d" || e.key === "D") {
-		keyboard.D = false;
-	}
-});
+document.addEventListener("keydown", (e) => setKey(e, true));
+document.addEventListener("keyup", (e) => setKey(e, false));
 
 // Nicht auf "load" warten: auf dem iPhone kommt "load" erst spät (Bilder und Sounds)
 document.addEventListener("DOMContentLoaded", initPage);

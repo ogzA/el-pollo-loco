@@ -57,17 +57,25 @@ export class World {
 			if (!this.character.isColliding(item)) continue;
 
 			if (item.isCoin) {
-				this.character.coins++;
-				this.level.collectables.splice(i, 1);
-				this.coinBar.setPercentage(this.getCoinPercentage());
-				AudioHub.playOne(AudioHub.COIN_COLLECT);
+				this.collectCoin(i);
 			} else if (item.isBottle && this.character.canCollectBottle()) {
-				this.character.bottles++;
-				this.level.collectables.splice(i, 1);
-				this.bottleBar.setPercentage(this.getBottlePercentage());
-				AudioHub.playOne(AudioHub.BOTTLE_COLLECT);
+				this.collectBottle(i);
 			}
 		}
+	}
+
+	collectCoin(i) {
+		this.character.coins++;
+		this.level.collectables.splice(i, 1);
+		this.coinBar.setPercentage(this.getCoinPercentage());
+		AudioHub.playOne(AudioHub.COIN_COLLECT);
+	}
+
+	collectBottle(i) {
+		this.character.bottles++;
+		this.level.collectables.splice(i, 1);
+		this.bottleBar.setPercentage(this.getBottlePercentage());
+		AudioHub.playOne(AudioHub.BOTTLE_COLLECT);
 	}
 
 	getBottlePercentage() {
@@ -84,17 +92,21 @@ export class World {
 			this.character.bottles > 0 &&
 			this.character.canThrow()
 		) {
-			const bottle = new ThrowableObject(
-				this.character.x + 100,
-				this.character.y + 100,
-				this.character.otherDirection,
-			);
-			this.throwableObjects.push(bottle);
-			this.character.bottles--;
-			this.character.lastThrow = new Date().getTime();
-
-			this.bottleBar.setPercentage(this.getBottlePercentage());
+			this.throwBottle();
 		}
+	}
+
+	throwBottle() {
+		const bottle = new ThrowableObject(
+			this.character.x + 100,
+			this.character.y + 100,
+			this.character.otherDirection,
+		);
+		this.throwableObjects.push(bottle);
+		this.character.bottles--;
+		this.character.lastThrow = new Date().getTime();
+
+		this.bottleBar.setPercentage(this.getBottlePercentage());
 	}
 
 	checkCollisions() {
@@ -105,16 +117,17 @@ export class World {
 			if (!enemy.isEndboss && this.character.isCollidingFromTop(enemy)) {
 				enemy.die();
 				stomped = true;
-			} else if (
-				this.character.isColliding(enemy) &&
-				!this.character.isHurt()
-			) {
+			} else if (this.canHurtCharacter(enemy)) {
 				this.character.hit(enemy.damage);
 				this.statusBar.setPercentage(this.character.energy);
 			}
 		});
 		// Nach der Schleife springen, sonst zählt ein Nachbar-Huhn als seitlicher Treffer
 		if (stomped) this.character.jump();
+	}
+
+	canHurtCharacter(enemy) {
+		return this.character.isColliding(enemy) && !this.character.isHurt();
 	}
 
 	checkBottleCollisions() {
@@ -125,14 +138,18 @@ export class World {
 		this.throwableObjects.forEach((bottle) => {
 			if (bottle.isBroken) return;
 			if (bottle.isColliding(boss)) {
-				bottle.breakBottle();
-				boss.hit();
-				this.endbossBar.setPercentage(boss.energy);
-				if (boss.isDead()) {
-					this.endGame(true);
-				}
+				this.hitEndboss(bottle, boss);
 			}
 		});
+	}
+
+	hitEndboss(bottle, boss) {
+		bottle.breakBottle();
+		boss.hit();
+		this.endbossBar.setPercentage(boss.energy);
+		if (boss.isDead()) {
+			this.endGame(true);
+		}
 	}
 
 	checkBottleChickenCollisions() {
@@ -200,31 +217,33 @@ export class World {
 	// Reihenfolge ist hier wichtig! Hinweis: Überlappung der Elemente
 	draw() {
 		this.clearCanvas(this.canvas);
-
 		this.ctx.translate(this.camera_x, 0);
-
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
-
 		this.ctx.translate(-this.camera_x, 0); // Back
-		// -------------- Space for fixed objects ------------
-		this.addToMap(this.statusBar);
-		this.addToMap(this.coinBar);
-		this.addToMap(this.bottleBar);
-		this.addToMap(this.endbossBar);
-		// -------------- Space for fixed objects ------------
+		this.drawFixedObjects();
 		this.ctx.translate(this.camera_x, 0); // Forwardss
-
-		this.addObjectsToMap(this.level.enemies);
-		this.addObjectsToMap(this.throwableObjects);
-		this.addObjectsToMap(this.level.collectables);
-		this.addToMap(this.character);
-
+		this.drawMovableObjects();
 		this.ctx.translate(-this.camera_x, 0);
 
 		// Arrow Function bindet `this` an die World-Instanz.
 		// Bei ...function(){this.draw}  ginge der Kontext verloren und die Schleife bricht ab.
 		this.animationFrame = requestAnimationFrame(() => this.draw());
+	}
+
+	// -------------- Space for fixed objects ------------
+	drawFixedObjects() {
+		this.addToMap(this.statusBar);
+		this.addToMap(this.coinBar);
+		this.addToMap(this.bottleBar);
+		this.addToMap(this.endbossBar);
+	}
+
+	drawMovableObjects() {
+		this.addObjectsToMap(this.level.enemies);
+		this.addObjectsToMap(this.throwableObjects);
+		this.addObjectsToMap(this.level.collectables);
+		this.addToMap(this.character);
 	}
 
 	addObjectsToMap(objects) {
