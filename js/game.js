@@ -19,6 +19,17 @@ function startGame() {
 	init();
 }
 
+function restartGame() {
+	document.getElementById("end-screen").classList.add("d-none");
+	initLevel();
+	init();
+}
+
+function goHome() {
+	document.getElementById("end-screen").classList.add("d-none");
+	document.getElementById("start-screen").classList.remove("d-none");
+}
+
 function openInfo() {
 	document.getElementById("info-dialog").showModal();
 }
@@ -30,6 +41,10 @@ function closeInfo() {
 function addButtonEvents() {
 	document.getElementById("play-button").addEventListener("click", startGame);
 	document.getElementById("info-button").addEventListener("click", openInfo);
+	document
+		.getElementById("restart-button")
+		.addEventListener("click", restartGame);
+	document.getElementById("home-button").addEventListener("click", goHome);
 	document
 		.getElementById("close-info-button")
 		.addEventListener("click", closeInfo);

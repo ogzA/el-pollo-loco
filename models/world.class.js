@@ -21,6 +21,8 @@ export class World {
 	endbossBar = new EndbossBar();
 	throwableObjects = [];
 	MAX_COINS = 20;
+	gameOver = false;
+	animationFrame;
 
 	constructor(_canvas, _keyboard) {
 		this.ctx = _canvas.getContext("2d");
@@ -44,6 +46,7 @@ export class World {
 			this.checkThrowObjects();
 			this.checkCollectableCollisions();
 			this.checkEndbossAlert();
+			this.checkCharacterDead();
 		}, 50);
 	}
 
@@ -123,7 +126,7 @@ export class World {
 				boss.hit();
 				this.endbossBar.setPercentage(boss.energy);
 				if (boss.isDead()) {
-					this.endGame();
+					this.endGame(true);
 				}
 			}
 		});
@@ -158,10 +161,32 @@ export class World {
 		}
 	}
 
-	endGame() {
+	checkCharacterDead() {
+		if (this.character.isDead()) {
+			this.endGame(false);
+		}
+	}
+
+	endGame(isWon) {
+		if (this.gameOver) return;
+		this.gameOver = true;
 		setTimeout(() => {
 			IntervalHub.stopAllIntervals();
+			cancelAnimationFrame(this.animationFrame);
+			this.showEndScreen(isWon);
 		}, 1500);
+	}
+
+	showEndScreen(isWon) {
+		const endImage = document.getElementById("end-image");
+		if (isWon) {
+			endImage.src = "./assets/img/You won, you lost/You Won B.png";
+			endImage.alt = "You won";
+		} else {
+			endImage.src = "./assets/img/You won, you lost/Game Over.png";
+			endImage.alt = "Game over";
+		}
+		document.getElementById("end-screen").classList.remove("d-none");
 	}
 
 	getEndboss() {
@@ -195,7 +220,7 @@ export class World {
 
 		// Arrow Function bindet `this` an die World-Instanz.
 		// Bei ...function(){this.draw}  ginge der Kontext verloren und die Schleife bricht ab.
-		requestAnimationFrame(() => this.draw());
+		this.animationFrame = requestAnimationFrame(() => this.draw());
 	}
 
 	addObjectsToMap(objects) {
