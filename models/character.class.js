@@ -144,9 +144,9 @@ export class Character extends MovableObject {
 		AudioHub.playOne(AudioHub.CHARACTER_JUMP);
 	}
 
-	hit() {
+	hit(damage) {
 		if (this.isDead()) return;
-		super.hit();
+		super.hit(damage);
 		if (this.isDead()) {
 			AudioHub.playOne(AudioHub.CHARACTER_DEAD);
 		} else {

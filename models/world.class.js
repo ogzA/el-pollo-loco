@@ -109,7 +109,7 @@ export class World {
 				this.character.isColliding(enemy) &&
 				!this.character.isHurt()
 			) {
-				this.character.hit();
+				this.character.hit(enemy.damage);
 				this.statusBar.setPercentage(this.character.energy);
 			}
 		});

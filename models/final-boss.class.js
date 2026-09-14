@@ -20,6 +20,7 @@ export class FinalBoss extends MovableObject {
 		left: 15,
 	};
 	isEndboss = true;
+	damage = 20;
 	isAlerted = false;
 	alertStarted = 0;
 
@@ -36,7 +37,7 @@ export class FinalBoss extends MovableObject {
 	}
 
 	hit() {
-		super.hit(20);
+		super.hit(15);
 		this.currentImage = 0;
 		AudioHub.playOne(AudioHub.ENDBOSS_HURT);
 	}

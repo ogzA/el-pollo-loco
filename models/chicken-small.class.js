@@ -7,6 +7,7 @@ export class ChickenSmall extends MovableObject {
 	IMAGES_WALKING = ImageHub.CHICKEN_SMALL.move;
 	IMAGES_DEAD = ImageHub.CHICKEN_SMALL.dead;
 	showFrame = true;
+	damage = 5;
 	offset = {
 		top: 5,
 		right: 7,
@@ -23,7 +24,7 @@ export class ChickenSmall extends MovableObject {
 		this.height = 60;
 		this.width = 60;
 		this.y = 380;
-		this.x = 675 + _index * 150 + Math.random() * 60;
+		this.x = 800 + _index * 180 + Math.random() * 150;
 		this.speed = 0.25 + Math.random() * 0.3;
 
 		this.animate();
