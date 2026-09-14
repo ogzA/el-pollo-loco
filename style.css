@@ -113,6 +113,23 @@ button {
 		right: 1%;
 		width: 6.25%;
 	}
+
+	.impressum-link {
+		position: absolute;
+		bottom: 2%;
+		left: 1%;
+		padding: 4px 12px;
+		background-color: rgba(251, 231, 193, 0.9);
+		border: 2px solid #8b4513;
+		border-radius: 8px;
+		color: #5a2d0c;
+		font-size: min(18px, 2vw);
+		text-decoration: none;
+
+		&:hover {
+			background-color: #fbe7c1;
+		}
+	}
 }
 
 .end-screen {
@@ -237,6 +254,42 @@ button {
 			top: -24px;
 			right: -24px;
 			width: min(64px, 9vw);
+		}
+	}
+}
+
+.impressum {
+	width: min(700px, 90vw);
+	max-height: 90dvh;
+	overflow-y: auto;
+	padding: 24px 32px;
+	background-color: #fbe7c1;
+	border: 4px solid #8b4513;
+	border-radius: 16px;
+	color: #5a2d0c;
+	font-size: 18px;
+
+	h2 {
+		margin-bottom: 8px;
+		font-size: 32px;
+		color: #8b2500;
+	}
+
+	h3 {
+		margin-top: 16px;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-top: 24px;
+		padding: 8px 16px;
+		background-color: #8b4513;
+		border-radius: 8px;
+		color: #fbe7c1;
+		text-decoration: none;
+
+		&:hover {
+			background-color: #8b2500;
 		}
 	}
 }
